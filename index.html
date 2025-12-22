@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="BCIT CST student portfolio — projects in software, systems, and experiences.">
+    <title>KELSEN ALLOWAY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #000;
+            --white: #FFF;
+            --green: #213722;
+            --gold: #EFBF04;
+            --font-tech: "Space Mono";
+            --font-title: "Jockey One";
+        }
+
+        @keyframes hero_rotate_up {
+            0% {
+                opacity: 0;
+                transform: translateY(18px) rotateX(-70deg);
+            }
+
+            60% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+
+        .hero_text_swap {
+            transform-origin: bottom;
+            animation: hero_rotate_up 220ms ease both;
+            will-change: transform, opacity;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: var(--font-tech);
+            height: 100%;
+        }
+
+        main {
+            min-height: 100vh;
+            padding: 40px 10px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        #nav_bar {
+            padding: 10px;
+            position: fixed;
+            min-width: 95vw;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: #000;
+            z-index: 2000;
+
+            & a {
+                text-decoration: none;
+                color: var(--white);
+                position: relative;
+            }
+
+            & #nav_list {
+                display: flex;
+                flex-direction: row;
+                gap: 40px;
+                list-style: none;
+            }
+
+
+            & a::before,
+            & a::after {
+                opacity: 0;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--gold);
+            }
+
+            & a::before {
+                content: "[";
+                left: -1ch;
+            }
+
+            & a::after {
+                content: "]";
+                right: -1ch;
+            }
+
+            & a:hover::before,
+            & a:hover::after,
+            & a.active::before,
+            & a.active::after {
+                opacity: 1;
+            }
+        }
+
+
+
+        #home {
+            & #hero {
+                position: relative;
+                height: 50vh;
+            }
+
+            & #morse_logo {
+                position: absolute;
+                z-index: 0;
+                align-items: center;
+                justify-content: center;
+
+                pointer-events: none;
+                user-select: none;
+
+                letter-spacing: 0.3rem;
+                line-height: 5rem;
+                font-size: clamp(3rem, 60vh, 6rem);
+
+
+                opacity: 0.2;
+                filter: blur(1px);
+            }
+
+            & #hero_content {
+                position: relative;
+                z-index: 1;
+                perspective: 800px;
+            }
+
+            & #name {
+                font-size: clamp(3rem, 60vh, 8rem);
+                letter-spacing: 0.1rem;
+                line-height: 1.05;
+                margin: 0 0 0.6rem 0;
+                font-family: var(--font-title);
+            }
+
+            & #home_image_gallery {
+                display: flex;
+                justify-content: center;
+            }
+
+            & #gallery_dock {
+                display: flex;
+                align-items: flex-end;
+                padding-top: 60px;
+                gap: 20px;
+                width: 90%;
+
+                flex-wrap: nowrap;
+                overflow-y: visible;
+                overflow-x: auto;
+
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            & #gallery_dock::-webkit-scrollbar {
+                display: none;
+            }
+
+            & .gallery_image {
+                width: 250px;
+                height: 200px;
+
+                display: inline-flex;
+                flex: 0 0 auto;
+                overflow: hidden;
+                border-radius: 10px;
+
+                transform: scale(1);
+                transform-origin: center bottom;
+
+                transition: transform 120ms ease;
+                will-change: transform;
+            }
+
+            & .gallery_image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+
+            & span :first-child {
+                position: relative;
+                top: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="nav_bar">
+        <a id="nav_brand" href="#home">KELSEN ALLOWAY</a>
+        <ul id="nav_list">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#resume">RESUME</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home" class="page">
+            <div id="hero">
+
+                <pre id="morse_logo" aria-hidden="true">
+<span>-- .- -.- .
+    .. -
+    .-.. --- --- -.-
+    . .- ... -.--
+</span>
+</pre>
+
+
+                <div id="hero_content">
+                    <h1 id="name">KELSEN<br>ALLOWAY</h1>
+                    <p id="program">BCIT CST</p>
+                    <p id="tagline">Build things - software, systems, experiences</p>
+                </div>
+
+            </div>
+
+            <figure id="home_image_gallery" aria-label="Featured Work">
+                <div id="gallery_dock">
+                    <a class="gallery_image" href="#projects" aria_label="Inner Wilds" data-title="Inner Wilds"
+                        data-subtitle="Python text adventure • time-loop • ASCI UI"
+                        data-tagline="Build things — software, systems, experiences">
+                        <img src="https://placehold.co/600x400" alt="Inner Wilds screenshot">
+                    </a>
+
+                    <a class="gallery_image" href="#projects" aria-label="STACK" data-title="placehold"
+                        data-subtitle="placehold" data-tagline="placehold">
+                        <img src="https://placehold.co/600x400" alt="STACK app screenshot">
+                    </a>
+
+                    <a class="gallery_image" href="#projects" aria-label="Unicorn API" data-title="placehold"
+                        data-subtitle="placehold" data-tagline="placehold">
+                        <img src="https://placehold.co/600x400" alt="Unicorn API screenshot">
+                    </a>
+
+                    <a class="gallery_image" href="#projects" aria-label="More projects" data-title="placehold"
+                        data-subtitle="placehold" data-tagline="placehold">
+                        <img src="https://placehold.co/600x400" alt="More projects preview">
+                    </a>
+
+                    <a class="gallery_image" href="#projects" aria-label="Inner Wilds" data-title="placehold"
+                        data-subtitle="placehold" data-tagline="placehold">
+                        <img src="https://placehold.co/600x400" alt="Inner Wilds screenshot">
+                    </a>
+
+                    <a class="gallery_image" href="#projects" aria-label="STACK" data-title="placehold"
+                        data-subtitle="placehold" data-tagline="placehold">
+                        <img src="https://placehold.co/600x400" alt="STACK app screenshot">
+                    </a>
+
+                    <a class="gallery_image" href="#projects" aria-label="Unicorn API" data-title="placehold"
+                        data-subtitle="placehold" data-tagline="placehold">
+                        <img src="https://placehold.co/600x400" alt="Unicorn API screenshot">
+                    </a>
+
+                    <a class="gallery_image" href="#projects" aria-label="More projects" data-title="placehold"
+                        data-subtitle="placehold" data-tagline="placehold">
+                        <img src="https://placehold.co/600x400" alt="More projects preview">
+                    </a>
+
+                </div>
+
+            </figure>
+
+        </section>
+
+        <section id="about" class="page">
+            <h2>ABOUT</h2>
+        </section>
+
+        <section id="projects" class="page">
+            <h2>PROJECTS</h2>
+        </section>
+
+        <section id="resume" class="page">
+            <h2>RESUME</h2>
+        </section>
+
+        <section id="contact" class="page">
+            <h2>CONTACT</h2>
+        </section>
+
+    </main>
+
+    <footer>
+
+        <span><span>&copy;</span> <span id="year"></span> Kelsen Alloway</span>
+
+    </footer>
+
+
+    <script>
+
+        function set_active_page() {
+            const page = location.hash ? location.hash.slice(1) : "home";
+
+            const pages = document.querySelectorAll(".page");
+            pages.forEach(page => page.classList.remove("active"));
+
+            const nav_links = document.querySelectorAll("#nav_bar a");
+            nav_links.forEach(link => link.classList.remove("active"));
+
+            const active_page = document.getElementById(page);
+
+            if (active_page) {
+                active_page.classList.add("active");
+            } else {
+                document.getElementById("home").classList.add("active");
+            }
+
+            const active_link =
+                document.querySelector(`#nav_bar a[href="#${page}"]`) ||
+                document.querySelector(`#nav_bar a[href="#home"]`);
+
+            if (active_link) {
+                active_link.classList.add("active");
+            }
+        }
+
+        function initialize_home_gallery() {
+            const gallery_dock_element = document.getElementById("gallery_dock");
+            const gallery_image_elements = Array.from(
+                gallery_dock_element.querySelectorAll(".gallery_image")
+            );
+
+            const name_element = document.getElementById("name");
+            const program_element = document.getElementById("program");
+            const tagline_element = document.getElementById("tagline");
+
+            const default_name_text = name_element.innerHTML;
+            const default_program_text = program_element.textContent;
+            const default_tagline_text = tagline_element.textContent;
+
+            function set_hero_content_from(active_image) {
+                name_element.textContent = active_image.dataset.title;
+                program_element.textContent = active_image.dataset.subtitle;
+                tagline_element.textContent = active_image.dataset.tagline;
+            }
+
+            function reset_hero_content() {
+                name_element.innerHTML = default_name_text;
+                program_element.textContent = default_program_text;
+                tagline_element.textContent = default_tagline_text;
+            }
+
+            let mouse_x_pixels = null;
+            let mouse_y_pixels = null;
+
+
+            const minimum_scale = 0.9;
+            const maximum_scale = 1.1;
+            const influence_radius_pixels = 400;
+            const maximum_blur_pixels = 2;
+
+            function reset_gallery_images() {
+                for (const image_element of gallery_image_elements) {
+                    image_element.style.transform = "scale(1)";
+                    image_element.style.filter = "blur(0px)";
+                }
+            }
+
+            function apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels) {
+                active_image = null;
+
+                for (const image_element of gallery_image_elements) {
+                    const rect = image_element.getBoundingClientRect();
+                    if (
+                        mouse_x_pixels >= rect.left &&
+                        mouse_x_pixels <= rect.right &&
+                        mouse_y_pixels >= rect.top &&
+                        mouse_y_pixels <= rect.bottom
+                    ) {
+                        active_image = image_element;
+                        break;
+                    }
+                }
+
+                if (!active_image) {
+                    reset_gallery_images();
+                    reset_hero_content();
+                    active_image_timer = performance.now();
+                    return;
+                }
+
+                active_image_timer = performance.now();
+
+                active_image.style.transform = `scale(${maximum_scale})`;
+                active_image.style.filter = "blur(0px)";
+                if ((performance.now() - active_image_timer) > 240) {
+                    set_hero_content_from(active_image);
+                }
+
+
+                for (const image_element of gallery_image_elements) {
+                    if (image_element === active_image) continue;
+
+                    const rect = image_element.getBoundingClientRect();
+                    const center_x_pixels = rect.left + rect.width / 2;
+
+                    const cursor_distance_pixels =
+                        Math.abs(mouse_x_pixels - center_x_pixels);
+
+                    const proximity_ratio =
+                        1 - Math.min(cursor_distance_pixels / influence_radius_pixels, 1);
+
+                    const proximity_ratio_squared = proximity_ratio * proximity_ratio;
+
+                    const target_scale =
+                        minimum_scale +
+                        (maximum_scale - minimum_scale) * proximity_ratio_squared;
+
+                    const target_blur_pixels =
+                        maximum_blur_pixels * (1 - proximity_ratio_squared);
+
+                    image_element.style.transform = `scale(${target_scale})`;
+                    image_element.style.filter = `blur(${target_blur_pixels}px)`;
+                }
+            }
+
+            gallery_dock_element.addEventListener("pointermove", (event) => {
+                mouse_x_pixels = event.clientX;
+                mouse_y_pixels = event.clientY;
+                apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels);
+            });
+
+            gallery_dock_element.addEventListener("pointerleave", () => {
+                mouse_x_pixels = null;
+                mouse_y_pixels = null;
+                reset_gallery_images();
+            });
+
+            gallery_dock_element.addEventListener(
+                "scroll",
+                () => {
+                    if (mouse_x_pixels === null) return;
+                    apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels);
+                },
+                { passive: true }
+            );
+
+            window.addEventListener(
+                "scroll",
+                () => {
+                    if (mouse_x_pixels === null) return;
+                    apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels);
+                },
+                { passive: true }
+            );
+
+            window.addEventListener("resize", () => {
+                if (mouse_x_pixels === null) return;
+                apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels);
+            });
+
+
+        };
+
+        window.addEventListener("hashchange", set_active_page);
+
+
+
+
+        set_active_page();
+        initialize_home_gallery();
+
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+</body>
+
+</html>
