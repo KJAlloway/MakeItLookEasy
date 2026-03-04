@@ -18,29 +18,33 @@
             --gold: #EFBF04;
             --font-tech: "Space Mono";
             --font-title: "Jockey One";
+
+            --hero_swap_duration: 420ms;
+            --hero_swap_ease: cubic-bezier(.2, .9, .2, 1);
         }
 
-        @keyframes hero_rotate_up {
-            0% {
+        @keyframes hero_roll_exit {
+            from {
+                transform: translateY(0%);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-100%);
                 opacity: 0;
-                transform: translateY(18px) rotateX(-70deg);
-            }
-
-            60% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0deg);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0deg);
             }
         }
 
-        .hero_text_swap {
-            transform-origin: bottom;
-            animation: hero_rotate_up 220ms ease both;
-            will-change: transform, opacity;
+        @keyframes hero_roll_enter {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0%);
+                opacity: 1;
+            }
         }
 
         * {
@@ -151,6 +155,35 @@
                 position: relative;
                 z-index: 1;
                 perspective: 800px;
+
+                & .hero_roll {
+                    position: relative;
+                    display: block;
+                    overflow: hidden;
+                }
+
+                & .hero_layer {
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    align-items: center;
+                    will-change: transform, opacity;
+                    transform: translateY(0%);
+                    opacity: 1;
+                }
+
+                & .hero_layer.exit {
+                    animation: hero_roll_exit var(--hero_swap_duration) var(--hero_swap_ease) forwards;
+                }
+
+                & .hero_layer.enter {
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+
+                & .hero_layer.enter.go {
+                    animation: hero_roll_enter var(--hero_swap_duration) var(--hero_swap_ease) forwards;
+                }
             }
 
             & #name {
@@ -159,6 +192,26 @@
                 line-height: 1.05;
                 margin: 0 0 0.6rem 0;
                 font-family: var(--font-title);
+
+                & .hero_title_line {
+                    height: 1.05em;
+                }
+            }
+
+            & #program {
+                white-space: nowrap;
+
+                &.hero_roll {
+                    height: 1.2em;
+                }
+            }
+
+            & #tagline {
+                white-space: nowrap;
+
+                &.hero_roll {
+                    height: 1.2em;
+                }
             }
 
             & #home_image_gallery {
@@ -197,7 +250,7 @@
                 transform: scale(1);
                 transform-origin: center bottom;
 
-                transition: transform 120ms ease;
+                transition: transform 140ms ease;
                 will-change: transform;
             }
 
@@ -239,18 +292,30 @@
 
                 <pre id="morse_logo" aria-hidden="true">
 <span>-- .- -.- .
-    .. -
-    .-.. --- --- -.-
-    . .- ... -.--
+.. -
+.-.. --- --- -.-
+. .- ... -.--
 </span>
 </pre>
 
 
                 <div id="hero_content">
-                    <h1 id="name">KELSEN<br>ALLOWAY</h1>
-                    <p id="program">BCIT CST</p>
-                    <p id="tagline">Build things - software, systems, experiences</p>
+                    <h1 id="name">
+                        <span class="hero_roll hero_title_line" data-role="title-line-1"><span
+                                class="hero_layer">KELSEN</span></span>
+                        <span class="hero_roll hero_title_line" data-role="title-line-2"><span
+                                class="hero_layer">ALLOWAY</span></span>
+                    </h1>
+
+                    <p id="program" class="hero_roll hero_subtitle" data-role="subtitle">
+                        <span class="hero_layer">BCIT CST</span>
+                    </p>
+
+                    <p id="tagline" class="hero_roll hero_tagline" data-role="tagline">
+                        <span class="hero_layer">Build things - software, systems, experiences</span>
+                    </p>
                 </div>
+
 
             </div>
 
@@ -330,6 +395,33 @@
 
     <script>
 
+        function roll_set_text(roll_element, next_text) {
+            const layers = roll_element.querySelectorAll(".hero_layer");
+            const current_layer = layers[layers.length - 1];
+
+            if (current_layer.textContent === next_text) return;
+
+            const enter_layer = document.createElement("span");
+            enter_layer.className = "hero_layer enter";
+            enter_layer.textContent = next_text;
+
+            roll_element.appendChild(enter_layer);
+
+            current_layer.classList.add("exit");
+            enter_layer.classList.add("go");
+
+            const duration_ms = parseFloat(
+                getComputedStyle(document.documentElement)
+                    .getPropertyValue("--hero_swap_duration")
+            );
+
+
+            window.setTimeout(() => {
+                current_layer.remove();
+                enter_layer.classList.remove("enter", "go");
+            }, duration_ms + 30);
+        }
+
         function set_active_page() {
             const page = location.hash ? location.hash.slice(1) : "home";
 
@@ -354,6 +446,9 @@
             if (active_link) {
                 active_link.classList.add("active");
             }
+            if (page !== "home") {
+                home_gallery.reset_home_state();
+            }
         }
 
         function initialize_home_gallery() {
@@ -362,45 +457,104 @@
                 gallery_dock_element.querySelectorAll(".gallery_image")
             );
 
-            const name_element = document.getElementById("name");
-            const program_element = document.getElementById("program");
-            const tagline_element = document.getElementById("tagline");
-
-            const default_name_text = name_element.innerHTML;
-            const default_program_text = program_element.textContent;
-            const default_tagline_text = tagline_element.textContent;
-
-            function set_hero_content_from(active_image) {
-                name_element.textContent = active_image.dataset.title;
-                program_element.textContent = active_image.dataset.subtitle;
-                tagline_element.textContent = active_image.dataset.tagline;
-            }
-
-            function reset_hero_content() {
-                name_element.innerHTML = default_name_text;
-                program_element.textContent = default_program_text;
-                tagline_element.textContent = default_tagline_text;
-            }
-
             let mouse_x_pixels = null;
             let mouse_y_pixels = null;
 
+            let current_active_image = null;
+
+            const hero_activation_delay_ms = 100;
+
+            let hero_update_delay_timer = null;
+            let pending_hero_update = null;
+
+            function hero_update_time_guard(hovered_image) {
+                pending_hero_update = hovered_image;
+
+                if (hero_update_delay_timer !== null) {
+                    window.clearTimeout(hero_update_delay_timer);
+                }
+
+                hero_update_delay_timer = window.setTimeout(() => {
+                    hero_update_delay_timer = null;
+
+                    if (pending_hero_update !== hovered_image) return;
+
+                    if (hovered_image === null) {
+                        current_active_image = null;
+                        reset_hero_content();
+                        return;
+                    }
+
+                    current_active_image = hovered_image;
+                    set_hero_content_from(hovered_image);
+                }, hero_activation_delay_ms);
+            }
+
+
+            const title_line_1_roll = document.querySelector('[data-role="title-line-1"]');
+            const title_line_2_roll = document.querySelector('[data-role="title-line-2"]');
+            const subtitle_roll = document.querySelector('[data-role="subtitle"]');
+            const tagline_roll = document.querySelector('[data-role="tagline"]');
+
+            const default_hero_state = {
+                title_line_1: title_line_1_roll.querySelector(".hero_layer").textContent,
+                title_line_2: title_line_2_roll.querySelector(".hero_layer").textContent,
+                subtitle: subtitle_roll.querySelector(".hero_layer").textContent,
+                tagline: tagline_roll.querySelector(".hero_layer").textContent,
+            };
+
+            function set_hero_content_from(active_image) {
+
+                function parse_title_lines(raw_title) {
+                    const parts = String(raw_title).split("|");
+
+                    if (parts.length === 1) {
+                        return ["\u00A0", parts[0]];
+                    }
+
+                    return [parts[0], parts[1]];
+                }
+
+                const [line_1, line_2] = parse_title_lines(active_image.dataset.title);
+
+                roll_set_text(title_line_1_roll, line_1);
+                roll_set_text(title_line_2_roll, line_2);
+                roll_set_text(subtitle_roll, active_image.dataset.subtitle);
+                roll_set_text(tagline_roll, active_image.dataset.tagline);
+            }
+
+            function reset_hero_content() {
+                roll_set_text(title_line_1_roll, default_hero_state.title_line_1);
+                roll_set_text(title_line_2_roll, default_hero_state.title_line_2);
+                roll_set_text(subtitle_roll, default_hero_state.subtitle);
+                roll_set_text(tagline_roll, default_hero_state.tagline);
+            }
 
             const minimum_scale = 0.9;
             const maximum_scale = 1.1;
             const influence_radius_pixels = 400;
             const maximum_blur_pixels = 2;
 
-            function reset_gallery_images() {
-                for (const image_element of gallery_image_elements) {
-                    image_element.style.transform = "scale(1)";
-                    image_element.style.filter = "blur(0px)";
+            function pointer_tracker(event_or_null) {
+
+                if (!document.getElementById("home").classList.contains("active")) return;
+
+
+                if (event_or_null) {
+                    mouse_x_pixels = event_or_null.clientX;
+                    mouse_y_pixels = event_or_null.clientY;
                 }
+
+                if (mouse_x_pixels == null || mouse_y_pixels == null) return;
+
+                const hovered_image = get_hovered_image(mouse_x_pixels, mouse_y_pixels);
+
+                update_active_image(hovered_image);
+
+                apply_dock_wave_effects(hovered_image, mouse_x_pixels, mouse_y_pixels);
             }
 
-            function apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels) {
-                active_image = null;
-
+            function get_hovered_image(mouse_x_pixels, mouse_y_pixels) {
                 for (const image_element of gallery_image_elements) {
                     const rect = image_element.getBoundingClientRect();
                     if (
@@ -409,29 +563,37 @@
                         mouse_y_pixels >= rect.top &&
                         mouse_y_pixels <= rect.bottom
                     ) {
-                        active_image = image_element;
-                        break;
+                        return image_element;
                     }
                 }
+                return null;
+            }
 
-                if (!active_image) {
-                    reset_gallery_images();
-                    reset_hero_content();
-                    active_image_timer = performance.now();
+            function update_active_image(hovered_image) {
+
+                if (hovered_image === null) {
+                    hero_update_time_guard(null);
                     return;
                 }
 
-                active_image_timer = performance.now();
+                hero_update_time_guard(hovered_image);
 
-                active_image.style.transform = `scale(${maximum_scale})`;
-                active_image.style.filter = "blur(0px)";
-                if ((performance.now() - active_image_timer) > 240) {
-                    set_hero_content_from(active_image);
+                hovered_image.style.transform = `scale(${maximum_scale})`;
+                hovered_image.style.filter = "blur(0px)";
+            }
+
+            function apply_dock_wave_effects(hovered_image, mouse_x_pixels, mouse_y_pixels) {
+
+                if (!hovered_image) {
+                    for (const image_element of gallery_image_elements) {
+                        image_element.style.transform = "scale(1)";
+                        image_element.style.filter = "blur(0px)";
+                    }
+                    return;
                 }
 
-
                 for (const image_element of gallery_image_elements) {
-                    if (image_element === active_image) continue;
+                    if (image_element === hovered_image) continue;
 
                     const rect = image_element.getBoundingClientRect();
                     const center_x_pixels = rect.left + rect.width / 2;
@@ -456,51 +618,44 @@
                 }
             }
 
-            gallery_dock_element.addEventListener("pointermove", (event) => {
-                mouse_x_pixels = event.clientX;
-                mouse_y_pixels = event.clientY;
-                apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels);
-            });
+            function reset_home_state() {
+                if (hero_update_delay_timer !== null) {
+                    window.clearTimeout(hero_update_delay_timer);
+                    hero_update_delay_timer = null;
+                }
+                pending_hero_update = null;
+                current_active_image = null;
 
-            gallery_dock_element.addEventListener("pointerleave", () => {
+                for (const image_element of gallery_image_elements) {
+                    image_element.style.transform = "scale(1)";
+                    image_element.style.filter = "blur(0px)";
+                }
+
+                reset_hero_content();
+
                 mouse_x_pixels = null;
                 mouse_y_pixels = null;
-                reset_gallery_images();
-            });
+            }
 
-            gallery_dock_element.addEventListener(
-                "scroll",
-                () => {
-                    if (mouse_x_pixels === null) return;
-                    apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels);
-                },
-                { passive: true }
-            );
 
-            window.addEventListener(
-                "scroll",
-                () => {
-                    if (mouse_x_pixels === null) return;
-                    apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels);
-                },
-                { passive: true }
-            );
+            gallery_dock_element.addEventListener("pointermove", pointer_tracker);
 
-            window.addEventListener("resize", () => {
-                if (mouse_x_pixels === null) return;
-                apply_dock_wave_effects(mouse_x_pixels, mouse_y_pixels);
-            });
+            gallery_dock_element.addEventListener("scroll", () => pointer_tracker(null), { passive: true });
 
+            window.addEventListener("scroll", () => pointer_tracker(null), { passive: true });
+
+            window.addEventListener("resize", () => pointer_tracker(null));
+
+            return { reset_home_state };
 
         };
 
         window.addEventListener("hashchange", set_active_page);
 
-
+        const home_gallery = initialize_home_gallery();
 
 
         set_active_page();
-        initialize_home_gallery();
 
         document.getElementById("year").textContent = new Date().getFullYear();
     </script>
