@@ -59,6 +59,7 @@
             color: var(--white);
             font-family: var(--font-tech), monospace;
             height: 100%;
+            scroll-padding-top: 100px;
         }
 
         main {
@@ -256,7 +257,8 @@
                 cursor: grab;
             }
 
-            & .gallery_image:active {
+            & .gallery_image:active,
+            & #gallery_dock:active {
                 cursor: grabbing;
             }
 
@@ -271,13 +273,244 @@
             }
         }
 
+        #about {
+            max-width: 720px;
+            margin: 0 auto;
+            padding-top: 60px;
+
+            & .about_label {
+                font-size: 0.7rem;
+                letter-spacing: 0.25em;
+                color: var(--gold);
+                text-transform: uppercase;
+                margin-bottom: 2rem;
+            }
+
+            & .about_heading {
+                font-family: var(--font-title), sans-serif;
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                line-height: 1.05;
+                margin-bottom: 2.5rem;
+            }
+
+            & .about_body {
+                display: flex;
+                flex-direction: column;
+                gap: 1.4rem;
+                font-size: 0.9rem;
+                line-height: 1.8;
+                color: #ccc;
+
+                & p strong {
+                    color: var(--white);
+                }
+            }
+
+            & .about_divider {
+                width: 2rem;
+                height: 2px;
+                background-color: var(--gold);
+                margin: 2rem 0;
+            }
+
+            & .about_skills {
+                margin-top: 1rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 0.6rem;
+
+                & .skill_tag {
+                    font-size: 0.75rem;
+                    letter-spacing: 0.08em;
+                    padding: 0.4rem 0.8rem;
+                    border: 1px solid #333;
+                    color: #aaa;
+                    display: inline-block;
+                }
+            }
+        }
+        
+        #resume {
+            max-width: 860px;
+            margin: 0 auto;
+            padding-top: 60px;
+
+            & .resume_header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 2.5rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            & .resume_label {
+                font-size: 0.7rem;
+                letter-spacing: 0.25em;
+                color: var(--gold);
+                text-transform: uppercase;
+                margin-bottom: 0.5rem;
+            }
+
+            & .resume_heading {
+                font-family: var(--font-title), sans-serif;
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                line-height: 1.05;
+            }
+
+            & .resume_download {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--gold);
+                text-decoration: none;
+                border: 1px solid var(--gold);
+                padding: 0.5rem 1rem;
+                transition: background-color 120ms ease, color 120ms ease;
+                flex-shrink: 0;
+
+                & img {
+                    width: 16px;
+                    height: 16px;
+                    filter: invert(80%) sepia(60%) saturate(500%) hue-rotate(5deg);
+                }
+
+                &:hover {
+                    background-color: var(--gold);
+                    color: var(--black);
+
+                    & img {
+                        filter: invert(0);
+                    }
+                }
+            }
+
+            & .resume_section {
+                margin-bottom: 2.5rem;
+                border-top: 1px solid #222;
+                padding-top: 1.5rem;
+            }
+
+            & .resume_section_title {
+                font-size: 0.7rem;
+                letter-spacing: 0.25em;
+                color: var(--gold);
+                text-transform: uppercase;
+                margin-bottom: 1.5rem;
+            }
+
+            & .resume_entry {
+                margin-bottom: 1.8rem;
+
+                & .entry_title {
+                    font-size: 0.9rem;
+                    font-weight: 700;
+                    color: var(--white);
+                    margin-bottom: 0.2rem;
+                }
+
+                & .entry_meta {
+                    font-size: 0.75rem;
+                    color: #888;
+                    margin-bottom: 0.15rem;
+                    font-style: italic;
+                }
+
+                & .entry_date {
+                    font-size: 0.75rem;
+                    color: #555;
+                    margin-bottom: 0.8rem;
+                }
+
+                & ul {
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.4rem;
+
+                    & li {
+                        font-size: 0.8rem;
+                        line-height: 1.6;
+                        color: #bbb;
+                        padding-left: 1.2rem;
+                        position: relative;
+
+                        &::before {
+                            content: "—";
+                            position: absolute;
+                            left: 0;
+                            color: #444;
+                        }
+                    }
+                }
+            }
+
+            & .resume_skills_grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+
+                @media (max-width: 560px) {
+                    grid-template-columns: 1fr;
+                }
+
+                & .skill_group_title {
+                    font-size: 0.75rem;
+                    letter-spacing: 0.1em;
+                    color: var(--white);
+                    margin-bottom: 0.6rem;
+                    text-transform: uppercase;
+                }
+
+                & p {
+                    font-size: 0.8rem;
+                    line-height: 1.7;
+                    color: #bbb;
+                }
+            }
+        }
+
         footer {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem 0 1.5rem;
+            border-top: 1px solid #1a1a1a;
+            margin-top: 4rem;
 
-            & span :first-child {
-                position: relative;
-                top: 3px;
+            & .footer_links {
+                display: flex;
+                gap: 1.8rem;
+                align-items: center;
+
+                & a {
+                    display: flex;
+                    align-items: center;
+                    color: #555;
+                    transition: color 120ms ease;
+                    text-decoration: none;
+
+                    & img {
+                        width: 20px;
+                        height: 20px;
+                        filter: invert(40%);
+                        transition: filter 120ms ease;
+                    }
+
+                    &:hover img {
+                        filter: invert(80%) sepia(60%) saturate(500%) hue-rotate(5deg);
+                    }
+                }
+            }
+
+            & .footer_copy {
+                font-size: 0.7rem;
+                color: #333;
+                letter-spacing: 0.05em;
             }
         }
     </style>
@@ -307,7 +540,6 @@
 </span>
 </pre>
 
-
             <div id="hero_content">
                 <h1 id="name">
                         <span class="hero_roll hero_title_line" data-role="title-line-1"><span
@@ -330,45 +562,46 @@
 
         <section id="home_image_gallery" aria-label="Featured Work">
             <div id="gallery_dock">
-                <a class="gallery_image" href="#projects" aria-label="Inner Wilds" data-title="Inner Wilds"
-                   data-subtitle="Python text adventure • time-loop • ASCI UI"
-                   data-tagline="Build things — software, systems, experiences">
-                    <img src="https://placehold.co/600x400" alt="Inner Wilds screenshot">
+                <a class="gallery_image" href="#projects" aria-label="Inner Wilds"
+                   data-title="Inner Wilds"
+                   data-subtitle="Python • time-loop • ASCII UI"
+                   data-tagline="A lone pilot. A system caught in a loop. Get out.">
+                    <img src="assets/project_screenshots/inner_wilds.png" alt="Inner Wilds screenshot">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="STACK" data-title="placehold"
-                   data-subtitle="placehold" data-tagline="placehold">
-                    <img src="https://placehold.co/600x400" alt="STACK app screenshot">
+                <a class="gallery_image" href="#projects" aria-label="STACK"
+                   data-title="STACK"
+                   data-subtitle="Firebase • JavaScript • Agile"
+                   data-tagline="Manage your time like you mean it.">
+                    <img src="assets/project_screenshots/stack.png" alt="STACK app screenshot">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="Unicorn API" data-title="placehold"
-                   data-subtitle="placehold" data-tagline="placehold">
-                    <img src="https://placehold.co/600x400" alt="Unicorn API screenshot">
+                <a class="gallery_image" href="#projects" aria-label="Unicorn API"
+                   data-title="Unicorn API"
+                   data-subtitle="REST API • Express • MongoDB"
+                   data-tagline="Full CRUD. Real architecture. Fictional data.">
+                    <img src="assets/project_screenshots/unicorn_API.png" alt="Unicorn API screenshot">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="More projects" data-title="placehold"
-                   data-subtitle="placehold" data-tagline="placehold">
-                    <img src="https://placehold.co/600x400" alt="More projects preview">
+                <a class="gallery_image" href="#projects" aria-label="Business Needs Analysis"
+                   data-title="Business|Analysis"
+                   data-subtitle="Requirements • ERDs • Agile docs"
+                   data-tagline="Translating business needs into technical solutions.">
+                    <img src="assets/project_screenshots/business_analysis.png" alt="Business Analysis Cover Page">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="Inner Wilds" data-title="placehold"
-                   data-subtitle="placehold" data-tagline="placehold">
-                    <img src="https://placehold.co/600x400" alt="Inner Wilds screenshot">
+                <a class="gallery_image" href="#projects" aria-label="Website Redevelopment Proposal"
+                   data-title="Website|Proposal"
+                   data-subtitle="UX research • heuristics • strategy"
+                   data-tagline="A full UX audit and redevelopment brief for a real client.">
+                    <img src="assets/project_screenshots/website_redev_proposal.png" alt="Website Redevelopment Proposal Cover Page">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="STACK" data-title="placehold"
-                   data-subtitle="placehold" data-tagline="placehold">
-                    <img src="https://placehold.co/600x400" alt="STACK app screenshot">
-                </a>
-
-                <a class="gallery_image" href="#projects" aria-label="Unicorn API" data-title="placehold"
-                   data-subtitle="placehold" data-tagline="placehold">
-                    <img src="https://placehold.co/600x400" alt="Unicorn API screenshot">
-                </a>
-
-                <a class="gallery_image" href="#projects" aria-label="More projects" data-title="placehold"
-                   data-subtitle="placehold" data-tagline="placehold">
-                    <img src="https://placehold.co/600x400" alt="More projects preview">
+                <a class="gallery_image" href="#projects" aria-label="Heuristic Analysis"
+                   data-title="Heuristic|Analysis"
+                   data-subtitle="UX evaluation • comparative study"
+                   data-tagline="Measuring interfaces against the principles that make them work.">
+                    <img src="assets/project_screenshots/comparitive_hueristics.png" alt="Heuristic Analysis Cover Page">
                 </a>
 
             </div>
@@ -378,15 +611,161 @@
     </section>
 
     <section id="about" class="page">
-        <h2>ABOUT</h2>
-    </section>
-
-    <section id="projects" class="page">
-        <h2>PROJECTS</h2>
+        <p class="about_label">About</p>
+        <h2 class="about_heading">Making it<br>look easy.</h2>
+        <div class="about_body">
+            <p>I'm a <strong>BCIT Computer Systems Technology</strong> student and junior developer based in <strong>downtown Vancouver</strong> — looking for a summer 2026 internship where I can contribute to a team building things that matter.</p>
+            <p>What pulls me in isn't just making software work — it's making it <strong>feel right</strong>. My favourite parts of this program have been the details: the interaction that responds exactly how you'd expect, the interface that gets out of your way, the experience that just works. I care about intention in what I build.</p>
+            <p>I'm excited to find a team where I can grow, contribute meaningfully from day one, and keep getting better at the craft. I learn fast, I care about the work, and I don't coast.</p>
+            <p>Outside of code I'm a lifter, a dog dad, and a *painfully* amateur musician. I find that the same discipline that goes into those things — consistency, attention to detail, showing up when it's not convenient — tends to follow you into everything else.</p>
+            <p>Professionally; I've spent years in high-volume hospitality — bartending and leading teams in environments where <strong>precision, adaptability, and reading the room</strong> aren't optional. It turns out those skills translate.</p>
+        </div>
+        <div class="about_divider"></div>
+        <div class="about_skills">
+            <span class="skill_tag">Python</span>
+            <span class="skill_tag">JavaScript</span>
+            <span class="skill_tag">Java</span>
+            <span class="skill_tag">HTML / CSS</span>
+            <span class="skill_tag">Node.js / Express</span>
+            <span class="skill_tag">Firebase / Firestore</span>
+            <span class="skill_tag">MongoDB</span>
+            <span class="skill_tag">PostgreSQL</span>
+            <span class="skill_tag">Bootstrap / Tailwind</span>
+            <span class="skill_tag">Agile / Kanban</span>
+            <span class="skill_tag">Git / GitHub</span>
+            <span class="skill_tag">UX / UI Design</span>
+        </div>
     </section>
 
     <section id="resume" class="page">
-        <h2>RESUME</h2>
+        <div class="resume_header">
+            <div>
+                <p class="resume_label">Resume</p>
+                <h2 class="resume_heading">Kelsen Alloway</h2>
+            </div>
+            <a class="resume_download" href="assets/resume/resume_kelsen_alloway_2026_tech.pdf" download>
+                <img src="assets/icons/download.svg" alt="">
+                Download PDF
+            </a>
+        </div>
+
+        <div class="resume_section">
+            <p class="resume_section_title">Education</p>
+            <div class="resume_entry">
+                <p class="entry_title">Computer Systems Technology (CST) Diploma</p>
+                <p class="entry_meta">British Columbia Institute of Technology (BCIT) — Vancouver, BC</p>
+                <p class="entry_date">September 2025 – Present</p>
+                <ul>
+                    <li>Completing an intensive, full-time software development program emphasizing programming fundamentals, software testing, and Agile delivery.</li>
+                    <li>Designed, developed, and tested web and Python applications using JavaScript, Python, HTML, CSS, and modern frameworks.</li>
+                    <li>Collaborated in Agile teams using sprints, stand-ups, user stories, red routes, and Kanban boards to deliver working software.</li>
+                    <li>Produced formal technical documentation including business requirements, Agile planning documents, and entity-relationship diagrams (ERDs).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="resume_section">
+            <p class="resume_section_title">Projects</p>
+            <div class="resume_entry">
+                <p class="entry_title">Agile Team Web Application <span style="color:#555; font-weight:400;">— CST Projects</span></p>
+                <p class="entry_meta">3-person Agile development team</p>
+                <ul>
+                    <li>Planned and delivered a mobile-first time-management web application using Agile practices including sprints, stand-ups, user stories, and Kanban boards.</li>
+                    <li>Implemented front-end functionality using HTML, CSS, JavaScript, jQuery, and modern CSS frameworks (Tailwind, Bootstrap).</li>
+                    <li>Designed and executed test scenarios, including internal testing and live user testing, to validate functionality and usability.</li>
+                    <li>Used GitHub for version control, coordinating merges and resolving conflicts to maintain a stable codebase.</li>
+                </ul>
+            </div>
+            <div class="resume_entry">
+                <p class="entry_title">UX/UI Comparative Analysis <span style="color:#555; font-weight:400;">— CST Business Communications</span></p>
+                <p class="entry_meta">3-person research and writing team</p>
+                <ul>
+                    <li>Conducted a comparative UX/UI analysis between a team-developed web application and Google Calendar.</li>
+                    <li>Applied usability heuristics to evaluate navigation, information hierarchy, and user workflows.</li>
+                    <li>Identified design trade-offs and usability gaps, and proposed improvements grounded in user-centered design principles.</li>
+                    <li>Communicated findings through a structured written report tailored to both technical and non-technical audiences.</li>
+                </ul>
+            </div>
+            <div class="resume_entry">
+                <p class="entry_title">Python Text-Based Game <span style="color:#555; font-weight:400;">— CST Term Project</span></p>
+                <ul>
+                    <li>Designed and developed a modular Python game emphasizing clean structure, maintainability, and testability.</li>
+                    <li>Implemented gameplay systems and mechanics within a text-based format, adapting modern game design concepts to a constrained interface.</li>
+                    <li>Wrote internal test files and performed iterative testing throughout development to identify logic defects and edge cases.</li>
+                    <li>Conducted user testing to evaluate gameplay flow and usability, incorporating feedback into revisions.</li>
+                </ul>
+            </div>
+            <div class="resume_entry">
+                <p class="entry_title">Business Analysis & Systems Documentation <span style="color:#555; font-weight:400;">— CST Business Analysis</span></p>
+                <ul>
+                    <li>Collaborated in groups to analyze business needs and translate requirements into technical solutions.</li>
+                    <li>Created formal Agile documentation, system breakdowns, and entity-relationship diagrams (ERDs).</li>
+                    <li>Communicated technical concepts clearly to both technical and non-technical audiences.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="resume_section">
+            <p class="resume_section_title">Technical Skills</p>
+            <div class="resume_skills_grid">
+                <div>
+                    <p class="skill_group_title">Programming</p>
+                    <p>Python (strong), JavaScript, Java, C — applied in coursework emphasizing readable, testable code.</p>
+                </div>
+                <div>
+                    <p class="skill_group_title">Web Development</p>
+                    <p>HTML, CSS, Tailwind CSS, Bootstrap, jQuery — mobile-first and responsive design principles.</p>
+                </div>
+                <div>
+                    <p class="skill_group_title">Testing & Quality</p>
+                    <p>Unit testing, internal test files, user testing, debugging; awareness of test-driven development and CI/CD workflows.</p>
+                </div>
+                <div>
+                    <p class="skill_group_title">Databases</p>
+                    <p>PostgreSQL, MongoDB, Firebase — basic schema design and data interaction.</p>
+                </div>
+                <div>
+                    <p class="skill_group_title">Agile Practices</p>
+                    <p>Sprints, stand-ups, user stories, Kanban boards, collaborative delivery.</p>
+                </div>
+                <div>
+                    <p class="skill_group_title">Professional Skills</p>
+                    <p>Clear written and verbal communication. Strong ownership and accountability in deadline-driven environments.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="resume_section">
+            <p class="resume_section_title">Operational & Leadership Experience</p>
+            <div class="resume_entry">
+                <p class="entry_title">JOEY Bentall One <span style="color:#555; font-weight:400;">— Bartender</span></p>
+                <p class="entry_date">Vancouver, BC | November 2024 – Present</p>
+                <ul>
+                    <li>Operate in a high-volume, fast-changing environment requiring precision, adaptability, and consistent execution under pressure.</li>
+                    <li>Rapidly learn and apply new processes, tools, and standards as part of test-location rollouts.</li>
+                </ul>
+            </div>
+            <div class="resume_entry">
+                <p class="entry_title">Cactus Club Café <span style="color:#555; font-weight:400;">— Progressive Leadership Roles</span></p>
+                <p class="entry_date">2016 – 2024</p>
+                <ul>
+                    <li>Advanced through multiple roles with increasing responsibility, contributing to process improvements, training systems, and operational consistency across multiple locations.</li>
+                    <li>Worked in deadline-driven environments requiring clear communication, ownership of outcomes, and coordination across teams.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="resume_section">
+            <p class="resume_section_title">Certifications</p>
+            <div class="resume_entry">
+                <p class="entry_title">Red Seal Certification</p>
+                <p class="entry_meta">SAIT / VCC</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects" class="page">
+        <h2>PROJECTS</h2>
     </section>
 
     <section id="contact" class="page">
@@ -396,9 +775,21 @@
 </main>
 
 <footer>
-
-    <span><span>&copy;</span> <span id="year"></span> Kelsen Alloway</span>
-
+    <div class="footer_links">
+        <a href="https://github.com/KJAlloway" target="_blank" rel="noopener" aria-label="GitHub">
+            <img src="assets/icons/brand-github.svg" alt="GitHub">
+        </a>
+        <a href="mailto:kelsen@makeitlookeasy.ca" aria-label="Email">
+            <img src="assets/icons/mail.svg" alt="Email">
+        </a>
+        <a href="https://www.linkedin.com/in/KJAlloway" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <img src="assets/icons/brand-linkedin.svg" alt="LinkedIn">
+        </a>
+        <a href="https://www.instagram.com/kelsenalloway/" target="_blank" rel="noopener" aria-label="Instagram">
+            <img src="assets/icons/brand-instagram.svg" alt="Instagram">
+        </a>
+    </div>
+    <span class="footer_copy"><span>&copy;</span> <span id="year"></span> Kelsen Alloway</span>
 </footer>
 
 
@@ -458,6 +849,7 @@
         if (page !== "home") {
             home_gallery.reset_home_state();
         }
+        window.scrollTo(0, 0);
     }
 
     function initialize_home_gallery() {
@@ -470,7 +862,7 @@
         let mouse_y_pixels = null;
 
         let is_dragging = false;
-        let drag_start_x = 0;
+        let drag_start_x = null;
         let drag_start_scroll_left = 0;
         let drag_distance = 0;
 
@@ -699,7 +1091,7 @@
         gallery_dock_element.addEventListener("pointerdown", (event) => {
             if (!event.target.closest(".gallery_image")) return;
             cancel_momentum();
-            is_dragging = true;
+            is_dragging = false;
             drag_start_x = event.clientX;
             drag_start_scroll_left = gallery_dock_element.scrollLeft;
             drag_distance = 0;
@@ -707,15 +1099,23 @@
             position_samples = [];
             last_x = event.clientX;
             last_time = performance.now();
-            gallery_dock_element.setPointerCapture(event.pointerId);
         });
 
         gallery_dock_element.addEventListener("pointermove", (event) => {
+            if (drag_start_x === null) return;
+
+            const delta = event.clientX - drag_start_x;
+            const distance = Math.abs(delta);
+
+            if (!is_dragging && distance > 5) {
+                is_dragging = true;
+                gallery_dock_element.setPointerCapture(event.pointerId);
+            }
+
             if (!is_dragging) return;
 
             const now = performance.now();
-            const delta = event.clientX - drag_start_x;
-            drag_distance = Math.abs(delta);
+            drag_distance = distance;
             gallery_dock_element.scrollLeft = drag_start_scroll_left - delta;
 
             position_samples.push({ x: event.clientX, time: now });
@@ -728,6 +1128,7 @@
         gallery_dock_element.addEventListener("pointerup", () => {
             if (!is_dragging) return;
             is_dragging = false;
+            drag_start_x = null;
 
             if (position_samples.length >= 2) {
                 const oldest = position_samples[0];
@@ -739,15 +1140,18 @@
                     momentum_frame = requestAnimationFrame(run_momentum);
                 }
             }
+            drag_distance = 0;
         });
 
         gallery_dock_element.addEventListener("pointercancel", () => {
             is_dragging = false;
+            drag_start_x = null;
             cancel_momentum();
         });
 
         gallery_dock_element.addEventListener("click", (event) => {
             if (drag_distance > 5) event.preventDefault();
+            else drag_start_x = null;
         });
 
         gallery_dock_element.addEventListener("dragstart", (event) => {
@@ -770,6 +1174,8 @@
     const home_gallery = initialize_home_gallery();
 
     window.addEventListener("hashchange", set_active_page);
+
+    window.addEventListener("load", set_active_page);
 
     set_active_page();
 
