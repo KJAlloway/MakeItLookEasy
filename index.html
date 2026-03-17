@@ -8,16 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            rel="stylesheet">
     <style>
         :root {
             --black: #000;
             --white: #FFF;
             --green: #213722;
             --gold: #EFBF04;
-            --font-tech: "Space Mono";
-            --font-title: "Jockey One";
+            --font-tech: "Space Mono", monospace;
+            --font-title: "Jockey One", sans-serif;
 
             --hero_swap_duration: 420ms;
             --hero_swap_ease: cubic-bezier(.2, .9, .2, 1);
@@ -57,7 +57,7 @@
         body {
             background-color: var(--black);
             color: var(--white);
-            font-family: var(--font-tech);
+            font-family: var(--font-tech), monospace;
             height: 100%;
         }
 
@@ -77,7 +77,7 @@
         #nav_bar {
             padding: 10px;
             position: fixed;
-            min-width: 95vw;
+            width: 95vw;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -124,7 +124,6 @@
                 opacity: 1;
             }
         }
-
 
 
         #home {
@@ -191,7 +190,7 @@
                 letter-spacing: 0.1rem;
                 line-height: 1.05;
                 margin: 0 0 0.6rem 0;
-                font-family: var(--font-title);
+                font-family: var(--font-title), sans-serif;
 
                 & .hero_title_line {
                     height: 1.05em;
@@ -252,6 +251,13 @@
 
                 transition: transform 140ms ease;
                 will-change: transform;
+
+                -webkit-user-drag: none;
+                cursor: grab;
+            }
+
+            & .gallery_image:active {
+                cursor: grabbing;
             }
 
             & .gallery_image img {
@@ -259,6 +265,9 @@
                 height: 100%;
                 object-fit: cover;
                 display: block;
+
+                -webkit-user-drag: none;
+                user-select: none;
             }
         }
 
@@ -276,19 +285,19 @@
 
 <body>
 
-    <nav id="nav_bar">
-        <a id="nav_brand" href="#home">KELSEN ALLOWAY</a>
-        <ul id="nav_list">
-            <li><a href="#about">ABOUT</a></li>
-            <li><a href="#resume">RESUME</a></li>
-            <li><a href="#projects">PROJECTS</a></li>
-            <li><a href="#contact">CONTACT</a></li>
-        </ul>
-    </nav>
+<nav id="nav_bar">
+    <a id="nav_brand" href="#home">KELSEN ALLOWAY</a>
+    <ul id="nav_list">
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#resume">RESUME</a></li>
+        <li><a href="#projects">PROJECTS</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+    </ul>
+</nav>
 
-    <main>
-        <section id="home" class="page">
-            <div id="hero">
+<main>
+    <section id="home" class="page">
+        <div id="hero">
 
                 <pre id="morse_logo" aria-hidden="true">
 <span>-- .- -.- .
@@ -299,366 +308,469 @@
 </pre>
 
 
-                <div id="hero_content">
-                    <h1 id="name">
+            <div id="hero_content">
+                <h1 id="name">
                         <span class="hero_roll hero_title_line" data-role="title-line-1"><span
                                 class="hero_layer">KELSEN</span></span>
-                        <span class="hero_roll hero_title_line" data-role="title-line-2"><span
-                                class="hero_layer">ALLOWAY</span></span>
-                    </h1>
+                    <span class="hero_roll hero_title_line" data-role="title-line-2"><span
+                            class="hero_layer">ALLOWAY</span></span>
+                </h1>
 
-                    <p id="program" class="hero_roll hero_subtitle" data-role="subtitle">
-                        <span class="hero_layer">BCIT CST</span>
-                    </p>
+                <p id="program" class="hero_roll hero_subtitle" data-role="subtitle">
+                    <span class="hero_layer">BCIT CST</span>
+                </p>
 
-                    <p id="tagline" class="hero_roll hero_tagline" data-role="tagline">
-                        <span class="hero_layer">Build things - software, systems, experiences</span>
-                    </p>
-                </div>
+                <p id="tagline" class="hero_roll hero_tagline" data-role="tagline">
+                    <span class="hero_layer">Build things - software, systems, experiences</span>
+                </p>
+            </div>
 
+
+        </div>
+
+        <section id="home_image_gallery" aria-label="Featured Work">
+            <div id="gallery_dock">
+                <a class="gallery_image" href="#projects" aria-label="Inner Wilds" data-title="Inner Wilds"
+                   data-subtitle="Python text adventure • time-loop • ASCI UI"
+                   data-tagline="Build things — software, systems, experiences">
+                    <img src="https://placehold.co/600x400" alt="Inner Wilds screenshot">
+                </a>
+
+                <a class="gallery_image" href="#projects" aria-label="STACK" data-title="placehold"
+                   data-subtitle="placehold" data-tagline="placehold">
+                    <img src="https://placehold.co/600x400" alt="STACK app screenshot">
+                </a>
+
+                <a class="gallery_image" href="#projects" aria-label="Unicorn API" data-title="placehold"
+                   data-subtitle="placehold" data-tagline="placehold">
+                    <img src="https://placehold.co/600x400" alt="Unicorn API screenshot">
+                </a>
+
+                <a class="gallery_image" href="#projects" aria-label="More projects" data-title="placehold"
+                   data-subtitle="placehold" data-tagline="placehold">
+                    <img src="https://placehold.co/600x400" alt="More projects preview">
+                </a>
+
+                <a class="gallery_image" href="#projects" aria-label="Inner Wilds" data-title="placehold"
+                   data-subtitle="placehold" data-tagline="placehold">
+                    <img src="https://placehold.co/600x400" alt="Inner Wilds screenshot">
+                </a>
+
+                <a class="gallery_image" href="#projects" aria-label="STACK" data-title="placehold"
+                   data-subtitle="placehold" data-tagline="placehold">
+                    <img src="https://placehold.co/600x400" alt="STACK app screenshot">
+                </a>
+
+                <a class="gallery_image" href="#projects" aria-label="Unicorn API" data-title="placehold"
+                   data-subtitle="placehold" data-tagline="placehold">
+                    <img src="https://placehold.co/600x400" alt="Unicorn API screenshot">
+                </a>
+
+                <a class="gallery_image" href="#projects" aria-label="More projects" data-title="placehold"
+                   data-subtitle="placehold" data-tagline="placehold">
+                    <img src="https://placehold.co/600x400" alt="More projects preview">
+                </a>
 
             </div>
 
-            <figure id="home_image_gallery" aria-label="Featured Work">
-                <div id="gallery_dock">
-                    <a class="gallery_image" href="#projects" aria_label="Inner Wilds" data-title="Inner Wilds"
-                        data-subtitle="Python text adventure • time-loop • ASCI UI"
-                        data-tagline="Build things — software, systems, experiences">
-                        <img src="https://placehold.co/600x400" alt="Inner Wilds screenshot">
-                    </a>
-
-                    <a class="gallery_image" href="#projects" aria-label="STACK" data-title="placehold"
-                        data-subtitle="placehold" data-tagline="placehold">
-                        <img src="https://placehold.co/600x400" alt="STACK app screenshot">
-                    </a>
-
-                    <a class="gallery_image" href="#projects" aria-label="Unicorn API" data-title="placehold"
-                        data-subtitle="placehold" data-tagline="placehold">
-                        <img src="https://placehold.co/600x400" alt="Unicorn API screenshot">
-                    </a>
-
-                    <a class="gallery_image" href="#projects" aria-label="More projects" data-title="placehold"
-                        data-subtitle="placehold" data-tagline="placehold">
-                        <img src="https://placehold.co/600x400" alt="More projects preview">
-                    </a>
-
-                    <a class="gallery_image" href="#projects" aria-label="Inner Wilds" data-title="placehold"
-                        data-subtitle="placehold" data-tagline="placehold">
-                        <img src="https://placehold.co/600x400" alt="Inner Wilds screenshot">
-                    </a>
-
-                    <a class="gallery_image" href="#projects" aria-label="STACK" data-title="placehold"
-                        data-subtitle="placehold" data-tagline="placehold">
-                        <img src="https://placehold.co/600x400" alt="STACK app screenshot">
-                    </a>
-
-                    <a class="gallery_image" href="#projects" aria-label="Unicorn API" data-title="placehold"
-                        data-subtitle="placehold" data-tagline="placehold">
-                        <img src="https://placehold.co/600x400" alt="Unicorn API screenshot">
-                    </a>
-
-                    <a class="gallery_image" href="#projects" aria-label="More projects" data-title="placehold"
-                        data-subtitle="placehold" data-tagline="placehold">
-                        <img src="https://placehold.co/600x400" alt="More projects preview">
-                    </a>
-
-                </div>
-
-            </figure>
-
         </section>
 
-        <section id="about" class="page">
-            <h2>ABOUT</h2>
-        </section>
+    </section>
 
-        <section id="projects" class="page">
-            <h2>PROJECTS</h2>
-        </section>
+    <section id="about" class="page">
+        <h2>ABOUT</h2>
+    </section>
 
-        <section id="resume" class="page">
-            <h2>RESUME</h2>
-        </section>
+    <section id="projects" class="page">
+        <h2>PROJECTS</h2>
+    </section>
 
-        <section id="contact" class="page">
-            <h2>CONTACT</h2>
-        </section>
+    <section id="resume" class="page">
+        <h2>RESUME</h2>
+    </section>
 
-    </main>
+    <section id="contact" class="page">
+        <h2>CONTACT</h2>
+    </section>
 
-    <footer>
+</main>
 
-        <span><span>&copy;</span> <span id="year"></span> Kelsen Alloway</span>
+<footer>
 
-    </footer>
+    <span><span>&copy;</span> <span id="year"></span> Kelsen Alloway</span>
 
-
-    <script>
-
-        function roll_set_text(roll_element, next_text) {
-            const layers = roll_element.querySelectorAll(".hero_layer");
-            const current_layer = layers[layers.length - 1];
-
-            if (current_layer.textContent === next_text) return;
-
-            const enter_layer = document.createElement("span");
-            enter_layer.className = "hero_layer enter";
-            enter_layer.textContent = next_text;
-
-            roll_element.appendChild(enter_layer);
-
-            current_layer.classList.add("exit");
-            enter_layer.classList.add("go");
-
-            const duration_ms = parseFloat(
-                getComputedStyle(document.documentElement)
-                    .getPropertyValue("--hero_swap_duration")
-            );
+</footer>
 
 
-            window.setTimeout(() => {
-                current_layer.remove();
-                enter_layer.classList.remove("enter", "go");
-            }, duration_ms + 30);
+<script>
+
+    function roll_set_text(roll_element, next_text) {
+        const layers = roll_element.querySelectorAll(".hero_layer");
+        const current_layer = layers[layers.length - 1];
+
+        if (current_layer.textContent === next_text) return;
+
+        const enter_layer = document.createElement("span");
+        enter_layer.className = "hero_layer enter";
+        enter_layer.textContent = next_text;
+
+        roll_element.appendChild(enter_layer);
+
+        current_layer.classList.add("exit");
+        enter_layer.classList.add("go");
+
+        const duration_ms = parseFloat(
+            getComputedStyle(document.documentElement)
+                .getPropertyValue("--hero_swap_duration")
+        );
+
+
+        window.setTimeout(() => {
+            current_layer.remove();
+            enter_layer.classList.remove("enter", "go");
+        }, duration_ms + 30);
+    }
+
+    function set_active_page() {
+        const page = location.hash ? location.hash.slice(1) : "home";
+
+        const pages = document.querySelectorAll(".page");
+        pages.forEach(page => page.classList.remove("active"));
+
+        const nav_links = document.querySelectorAll("#nav_bar a");
+        nav_links.forEach(link => link.classList.remove("active"));
+
+        const active_page = document.getElementById(page);
+
+        if (active_page) {
+            active_page.classList.add("active");
+        } else {
+            document.getElementById("home").classList.add("active");
         }
 
-        function set_active_page() {
-            const page = location.hash ? location.hash.slice(1) : "home";
+        const active_link =
+            document.querySelector(`#nav_bar a[href="#${page}"]`) ||
+            document.querySelector(`#nav_bar a[href="#home"]`);
 
-            const pages = document.querySelectorAll(".page");
-            pages.forEach(page => page.classList.remove("active"));
-
-            const nav_links = document.querySelectorAll("#nav_bar a");
-            nav_links.forEach(link => link.classList.remove("active"));
-
-            const active_page = document.getElementById(page);
-
-            if (active_page) {
-                active_page.classList.add("active");
-            } else {
-                document.getElementById("home").classList.add("active");
-            }
-
-            const active_link =
-                document.querySelector(`#nav_bar a[href="#${page}"]`) ||
-                document.querySelector(`#nav_bar a[href="#home"]`);
-
-            if (active_link) {
-                active_link.classList.add("active");
-            }
-            if (page !== "home") {
-                home_gallery.reset_home_state();
-            }
+        if (active_link) {
+            active_link.classList.add("active");
         }
+        if (page !== "home") {
+            home_gallery.reset_home_state();
+        }
+    }
 
-        function initialize_home_gallery() {
-            const gallery_dock_element = document.getElementById("gallery_dock");
-            const gallery_image_elements = Array.from(
-                gallery_dock_element.querySelectorAll(".gallery_image")
-            );
+    function initialize_home_gallery() {
+        const gallery_dock_element = document.getElementById("gallery_dock");
+        const gallery_image_elements = Array.from(
+            gallery_dock_element.querySelectorAll(".gallery_image")
+        );
 
-            let mouse_x_pixels = null;
-            let mouse_y_pixels = null;
+        let mouse_x_pixels = null;
+        let mouse_y_pixels = null;
 
-            let current_active_image = null;
+        let is_dragging = false;
+        let drag_start_x = 0;
+        let drag_start_scroll_left = 0;
+        let drag_distance = 0;
 
-            const hero_activation_delay_ms = 100;
+        let velocity = 0;
+        let last_x = 0;
+        let last_time = 0;
+        let momentum_frame = null;
 
-            let hero_update_delay_timer = null;
-            let pending_hero_update = null;
+        const friction = 0.95;
+        const min_velocity = 0.5;
+        const sample_duration_ms = 80;
+        let position_samples = [];
 
-            function hero_update_time_guard(hovered_image) {
-                pending_hero_update = hovered_image;
+        let current_active_image = null;
 
-                if (hero_update_delay_timer !== null) {
-                    window.clearTimeout(hero_update_delay_timer);
-                }
+        const hero_activation_delay_ms = 100;
 
-                hero_update_delay_timer = window.setTimeout(() => {
-                    hero_update_delay_timer = null;
+        let hero_update_delay_timer = null;
+        let pending_hero_update = null;
 
-                    if (pending_hero_update !== hovered_image) return;
+        const title_line_1_roll = document.querySelector('[data-role="title-line-1"]');
+        const title_line_2_roll = document.querySelector('[data-role="title-line-2"]');
+        const subtitle_roll = document.querySelector('[data-role="subtitle"]');
+        const tagline_roll = document.querySelector('[data-role="tagline"]');
 
-                    if (hovered_image === null) {
-                        current_active_image = null;
-                        reset_hero_content();
-                        return;
-                    }
+        const minimum_scale = 0.9;
+        const maximum_scale = 1.1;
+        const influence_radius_pixels = 400;
+        const maximum_blur_pixels = 2;
 
-                    current_active_image = hovered_image;
-                    set_hero_content_from(hovered_image);
-                }, hero_activation_delay_ms);
+        const default_hero_state = {
+            title_line_1: title_line_1_roll.querySelector(".hero_layer").textContent,
+            title_line_2: title_line_2_roll.querySelector(".hero_layer").textContent,
+            subtitle: subtitle_roll.querySelector(".hero_layer").textContent,
+            tagline: tagline_roll.querySelector(".hero_layer").textContent,
+        };
+
+        function hero_update_time_guard(hovered_image) {
+            pending_hero_update = hovered_image;
+
+            if (hero_update_delay_timer !== null) {
+                window.clearTimeout(hero_update_delay_timer);
             }
 
+            hero_update_delay_timer = window.setTimeout(() => {
+                hero_update_delay_timer = null;
 
-            const title_line_1_roll = document.querySelector('[data-role="title-line-1"]');
-            const title_line_2_roll = document.querySelector('[data-role="title-line-2"]');
-            const subtitle_roll = document.querySelector('[data-role="subtitle"]');
-            const tagline_roll = document.querySelector('[data-role="tagline"]');
-
-            const default_hero_state = {
-                title_line_1: title_line_1_roll.querySelector(".hero_layer").textContent,
-                title_line_2: title_line_2_roll.querySelector(".hero_layer").textContent,
-                subtitle: subtitle_roll.querySelector(".hero_layer").textContent,
-                tagline: tagline_roll.querySelector(".hero_layer").textContent,
-            };
-
-            function set_hero_content_from(active_image) {
-
-                function parse_title_lines(raw_title) {
-                    const parts = String(raw_title).split("|");
-
-                    if (parts.length === 1) {
-                        return ["\u00A0", parts[0]];
-                    }
-
-                    return [parts[0], parts[1]];
-                }
-
-                const [line_1, line_2] = parse_title_lines(active_image.dataset.title);
-
-                roll_set_text(title_line_1_roll, line_1);
-                roll_set_text(title_line_2_roll, line_2);
-                roll_set_text(subtitle_roll, active_image.dataset.subtitle);
-                roll_set_text(tagline_roll, active_image.dataset.tagline);
-            }
-
-            function reset_hero_content() {
-                roll_set_text(title_line_1_roll, default_hero_state.title_line_1);
-                roll_set_text(title_line_2_roll, default_hero_state.title_line_2);
-                roll_set_text(subtitle_roll, default_hero_state.subtitle);
-                roll_set_text(tagline_roll, default_hero_state.tagline);
-            }
-
-            const minimum_scale = 0.9;
-            const maximum_scale = 1.1;
-            const influence_radius_pixels = 400;
-            const maximum_blur_pixels = 2;
-
-            function pointer_tracker(event_or_null) {
-
-                if (!document.getElementById("home").classList.contains("active")) return;
-
-
-                if (event_or_null) {
-                    mouse_x_pixels = event_or_null.clientX;
-                    mouse_y_pixels = event_or_null.clientY;
-                }
-
-                if (mouse_x_pixels == null || mouse_y_pixels == null) return;
-
-                const hovered_image = get_hovered_image(mouse_x_pixels, mouse_y_pixels);
-
-                update_active_image(hovered_image);
-
-                apply_dock_wave_effects(hovered_image, mouse_x_pixels, mouse_y_pixels);
-            }
-
-            function get_hovered_image(mouse_x_pixels, mouse_y_pixels) {
-                for (const image_element of gallery_image_elements) {
-                    const rect = image_element.getBoundingClientRect();
-                    if (
-                        mouse_x_pixels >= rect.left &&
-                        mouse_x_pixels <= rect.right &&
-                        mouse_y_pixels >= rect.top &&
-                        mouse_y_pixels <= rect.bottom
-                    ) {
-                        return image_element;
-                    }
-                }
-                return null;
-            }
-
-            function update_active_image(hovered_image) {
+                if (pending_hero_update !== hovered_image) return;
 
                 if (hovered_image === null) {
-                    hero_update_time_guard(null);
+                    current_active_image = null;
+                    reset_hero_content();
                     return;
                 }
 
-                hero_update_time_guard(hovered_image);
+                current_active_image = hovered_image;
+                set_hero_content_from(hovered_image);
+            }, hero_activation_delay_ms);
+        }
 
-                hovered_image.style.transform = `scale(${maximum_scale})`;
-                hovered_image.style.filter = "blur(0px)";
+        function set_hero_content_from(active_image) {
+
+            function parse_title_lines(raw_title) {
+                const parts = String(raw_title).split("|");
+
+                if (parts.length === 1) {
+                    return ["\u00A0", parts[0]];
+                }
+
+                return [parts[0], parts[1]];
             }
 
-            function apply_dock_wave_effects(hovered_image, mouse_x_pixels, mouse_y_pixels) {
+            const [line_1, line_2] = parse_title_lines(active_image.dataset.title);
 
-                if (!hovered_image) {
-                    for (const image_element of gallery_image_elements) {
-                        image_element.style.transform = "scale(1)";
-                        image_element.style.filter = "blur(0px)";
-                    }
-                    return;
-                }
+            roll_set_text(title_line_1_roll, line_1);
+            roll_set_text(title_line_2_roll, line_2);
+            roll_set_text(subtitle_roll, active_image.dataset.subtitle);
+            roll_set_text(tagline_roll, active_image.dataset.tagline);
+        }
 
-                for (const image_element of gallery_image_elements) {
-                    if (image_element === hovered_image) continue;
+        function reset_hero_content() {
+            roll_set_text(title_line_1_roll, default_hero_state.title_line_1);
+            roll_set_text(title_line_2_roll, default_hero_state.title_line_2);
+            roll_set_text(subtitle_roll, default_hero_state.subtitle);
+            roll_set_text(tagline_roll, default_hero_state.tagline);
+        }
 
-                    const rect = image_element.getBoundingClientRect();
-                    const center_x_pixels = rect.left + rect.width / 2;
+        function pointer_tracker(event_or_null) {
 
-                    const cursor_distance_pixels =
-                        Math.abs(mouse_x_pixels - center_x_pixels);
+            if (!document.getElementById("home").classList.contains("active")) return;
 
-                    const proximity_ratio =
-                        1 - Math.min(cursor_distance_pixels / influence_radius_pixels, 1);
 
-                    const proximity_ratio_squared = proximity_ratio * proximity_ratio;
-
-                    const target_scale =
-                        minimum_scale +
-                        (maximum_scale - minimum_scale) * proximity_ratio_squared;
-
-                    const target_blur_pixels =
-                        maximum_blur_pixels * (1 - proximity_ratio_squared);
-
-                    image_element.style.transform = `scale(${target_scale})`;
-                    image_element.style.filter = `blur(${target_blur_pixels}px)`;
-                }
+            if (event_or_null) {
+                mouse_x_pixels = event_or_null.clientX;
+                mouse_y_pixels = event_or_null.clientY;
             }
 
-            function reset_home_state() {
-                if (hero_update_delay_timer !== null) {
-                    window.clearTimeout(hero_update_delay_timer);
-                    hero_update_delay_timer = null;
-                }
-                pending_hero_update = null;
-                current_active_image = null;
+            if (mouse_x_pixels == null || mouse_y_pixels == null) return;
 
+            const hovered_image = get_hovered_image(mouse_x_pixels, mouse_y_pixels);
+
+            update_active_image(hovered_image);
+
+            apply_dock_wave_effects(hovered_image, mouse_x_pixels, mouse_y_pixels);
+        }
+
+        function get_hovered_image(mouse_x_pixels, mouse_y_pixels) {
+            for (const image_element of gallery_image_elements) {
+                const rect = image_element.getBoundingClientRect();
+                if (
+                    mouse_x_pixels >= rect.left &&
+                    mouse_x_pixels <= rect.right &&
+                    mouse_y_pixels >= rect.top &&
+                    mouse_y_pixels <= rect.bottom
+                ) {
+                    return image_element;
+                }
+            }
+            return null;
+        }
+
+        function update_active_image(hovered_image) {
+
+            if (hovered_image === null) {
+                hero_update_time_guard(null);
+                return;
+            }
+
+            hero_update_time_guard(hovered_image);
+
+            hovered_image.style.transform = `scale(${maximum_scale})`;
+            hovered_image.style.filter = "blur(0px)";
+        }
+
+        function apply_dock_wave_effects(hovered_image, mouse_x_pixels) {
+
+            if (!hovered_image) {
                 for (const image_element of gallery_image_elements) {
                     image_element.style.transform = "scale(1)";
                     image_element.style.filter = "blur(0px)";
                 }
-
-                reset_hero_content();
-
-                mouse_x_pixels = null;
-                mouse_y_pixels = null;
+                return;
             }
 
+            for (const image_element of gallery_image_elements) {
+                if (image_element === hovered_image) continue;
 
-            gallery_dock_element.addEventListener("pointermove", pointer_tracker);
+                const rect = image_element.getBoundingClientRect();
+                const center_x_pixels = rect.left + rect.width / 2;
 
-            gallery_dock_element.addEventListener("scroll", () => pointer_tracker(null), { passive: true });
+                const cursor_distance_pixels =
+                    Math.abs(mouse_x_pixels - center_x_pixels);
 
-            window.addEventListener("scroll", () => pointer_tracker(null), { passive: true });
+                const proximity_ratio =
+                    1 - Math.min(cursor_distance_pixels / influence_radius_pixels, 1);
 
-            window.addEventListener("resize", () => pointer_tracker(null));
+                const proximity_ratio_squared = proximity_ratio * proximity_ratio;
 
-            return { reset_home_state };
+                const target_scale =
+                    minimum_scale +
+                    (maximum_scale - minimum_scale) * proximity_ratio_squared;
 
-        };
+                const target_blur_pixels =
+                    maximum_blur_pixels * (1 - proximity_ratio_squared);
 
-        window.addEventListener("hashchange", set_active_page);
+                image_element.style.transform = `scale(${target_scale})`;
+                image_element.style.filter = `blur(${target_blur_pixels}px)`;
+            }
+        }
 
-        const home_gallery = initialize_home_gallery();
+        function cancel_momentum() {
+            if (momentum_frame !== null) {
+                cancelAnimationFrame(momentum_frame);
+                momentum_frame = null;
+            }
+        }
 
+        function run_momentum() {
+            velocity *= friction;
 
-        set_active_page();
+            if (Math.abs(velocity) < min_velocity) {
+                cancel_momentum();
+                return;
+            }
+            gallery_dock_element.scrollLeft -= velocity;
+            momentum_frame = requestAnimationFrame(run_momentum);
+        }
 
-        document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+        function reset_home_state() {
+            if (hero_update_delay_timer !== null) {
+                window.clearTimeout(hero_update_delay_timer);
+                hero_update_delay_timer = null;
+            }
+            pending_hero_update = null;
+            current_active_image = null;
+
+            for (const image_element of gallery_image_elements) {
+                image_element.style.transform = "scale(1)";
+                image_element.style.filter = "blur(0px)";
+            }
+
+            reset_hero_content();
+
+            mouse_x_pixels = null;
+            mouse_y_pixels = null;
+        }
+        
+        gallery_dock_element.addEventListener("pointermove", pointer_tracker);
+
+        gallery_dock_element.addEventListener("wheel", (event) => {
+            if (!event.shiftKey && event.deltaX === 0) return;
+            event.preventDefault();
+            gallery_dock_element.scrollBy({
+                left: (event.deltaX || event.deltaY) * (event.deltaMode === 1 ? 20 : 1),
+                behavior: "smooth"
+            });
+        }, { passive: false });
+
+        gallery_dock_element.addEventListener("scroll", () => pointer_tracker(null), {passive: true});
+
+        gallery_dock_element.addEventListener("pointerleave", () => {
+            hero_update_time_guard(null);
+            apply_dock_wave_effects(null, null, null);
+        });
+
+        gallery_dock_element.addEventListener("pointerdown", (event) => {
+            if (!event.target.closest(".gallery_image")) return;
+            cancel_momentum();
+            is_dragging = true;
+            drag_start_x = event.clientX;
+            drag_start_scroll_left = gallery_dock_element.scrollLeft;
+            drag_distance = 0;
+            velocity = 0;
+            position_samples = [];
+            last_x = event.clientX;
+            last_time = performance.now();
+            gallery_dock_element.setPointerCapture(event.pointerId);
+        });
+
+        gallery_dock_element.addEventListener("pointermove", (event) => {
+            if (!is_dragging) return;
+
+            const now = performance.now();
+            const delta = event.clientX - drag_start_x;
+            drag_distance = Math.abs(delta);
+            gallery_dock_element.scrollLeft = drag_start_scroll_left - delta;
+
+            position_samples.push({ x: event.clientX, time: now });
+            position_samples = position_samples.filter(s => now - s.time <= sample_duration_ms);
+
+            last_x = event.clientX;
+            last_time = now;
+        });
+
+        gallery_dock_element.addEventListener("pointerup", () => {
+            if (!is_dragging) return;
+            is_dragging = false;
+
+            if (position_samples.length >= 2) {
+                const oldest = position_samples[0];
+                const newest = position_samples[position_samples.length - 1];
+                const time_delta = newest.time - oldest.time;
+
+                if (time_delta > 0) {
+                    velocity = (newest.x - oldest.x) / time_delta * 16;
+                    momentum_frame = requestAnimationFrame(run_momentum);
+                }
+            }
+        });
+
+        gallery_dock_element.addEventListener("pointercancel", () => {
+            is_dragging = false;
+            cancel_momentum();
+        });
+
+        gallery_dock_element.addEventListener("click", (event) => {
+            if (drag_distance > 5) event.preventDefault();
+        });
+
+        window.addEventListener("scroll", () => pointer_tracker(null), {passive: true});
+
+        window.addEventListener("resize", () => pointer_tracker(null));
+
+        document.addEventListener("mouseleave", () => {
+            hero_update_time_guard(null);
+            apply_dock_wave_effects(null, null, null);
+        });
+
+        return {reset_home_state};
+
+    }
+
+    const home_gallery = initialize_home_gallery();
+
+    window.addEventListener("hashchange", set_active_page);
+
+    set_active_page();
+
+    document.getElementById("year").textContent = String(new Date().getFullYear());
+</script>
 
 </body>
 
