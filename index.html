@@ -750,6 +750,10 @@
             if (drag_distance > 5) event.preventDefault();
         });
 
+        gallery_dock_element.addEventListener("dragstart", (event) => {
+            event.preventDefault();
+        });
+
         window.addEventListener("scroll", () => pointer_tracker(null), {passive: true});
 
         window.addEventListener("resize", () => pointer_tracker(null));
