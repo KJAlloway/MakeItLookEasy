@@ -1,0 +1,4 @@
+[[headers]]
+for = "/assets/pdfs/*"
+[headers.values]
+Access-Control-Allow-Origin = "*"

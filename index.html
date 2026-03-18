@@ -1033,7 +1033,7 @@
         }
 
         #img_lightbox {
-            display: none;
+            display: flex;  /* always flex, never none */
             position: fixed;
             inset: 0;
             z-index: 3000;
@@ -1042,9 +1042,24 @@
             justify-content: center;
             padding: 2rem;
 
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 250ms ease, visibility 250ms ease;
+
             &.open {
-                display: flex;
+                opacity: 1;
+                visibility: visible;
             }
+
+            & #img_lightbox_inner {
+                transform: scale(0.93);
+                transition: transform 250ms cubic-bezier(.2, .9, .2, 1);
+            }
+
+            &.open #img_lightbox_inner {
+                transform: scale(1);
+            }
+
 
             & #img_lightbox_inner {
                 position: relative;
@@ -1057,10 +1072,9 @@
             }
 
             & #img_lightbox_img {
-                width: 100%;
+                max-width: 100%;
                 height: auto;
                 max-height: 85vh;
-                object-fit: contain;
                 display: block;
             }
 
@@ -1959,6 +1973,33 @@
 </footer>
 
 
+<form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact">
+    <input name="name"><input name="email">
+    <input name="subject"><textarea name="message"></textarea>
+</form>
+
+<div id="pdf_lightbox" aria-modal="true" role="dialog" aria-label="Document viewer">
+    <button id="pdf_lightbox_close" aria-label="Close document">&times;</button>
+    <div id="pdf_lightbox_inner">
+        <div id="pdf_lightbox_loading">
+            <span>Loading document</span>
+            <div id="pdf_loading_dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <iframe id="pdf_lightbox_frame" title="Document viewer"></iframe>
+    </div>
+</div>
+
+<div id="img_lightbox" aria-modal="true" role="dialog" aria-label="Image viewer">
+    <button id="img_lightbox_close" aria-label="Close image">&times;</button>
+    <div id="img_lightbox_inner">
+        <img id="img_lightbox_img" src="" alt="">
+        <p id="img_lightbox_caption"></p>
+    </div>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
     const SITE_BASE_URL = window.location.origin;
@@ -2400,6 +2441,9 @@
         const PDFJS_VIEWER = "https://unpkg.com/pdfjs-dist@4.9.155/web/viewer.html";
 
         function open_pdf(relative_path) {
+            const scrollbar_width = window.innerWidth - document.documentElement.clientWidth;
+            document.body.style.paddingRight = `${scrollbar_width}px`;
+            document.body.style.overflow = "hidden";
             const full_url = `${SITE_BASE_URL}/${relative_path}`;
             const is_local = window.location.hostname === "localhost"
                 || window.location.hostname === "127.0.0.1";
@@ -2417,6 +2461,8 @@
         }
 
         function close_pdf() {
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
             lightbox.classList.remove("open");
             frame.src = "";
             document.body.style.overflow = "";
@@ -2456,6 +2502,9 @@
         if (!lightbox || !img || !close_btn) return;
 
         function open_img(src, alt) {
+            const scrollbar_width = window.innerWidth - document.documentElement.clientWidth;
+            document.body.style.paddingRight = `${scrollbar_width}px`;
+            document.body.style.overflow = "hidden";
             img.src = src;
             img.alt = alt || "";
             if (caption) caption.textContent = alt || "";
@@ -2464,6 +2513,8 @@
         }
 
         function close_img() {
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
             lightbox.classList.remove("open");
             img.src = "";
             document.body.style.overflow = "";
@@ -2472,7 +2523,7 @@
         close_btn.addEventListener("click", close_img);
 
         lightbox.addEventListener("click", (e) => {
-            if (e.target === lightbox) close_img();
+            if (!e.target.closest("#img_lightbox_img")) close_img();
         });
 
         document.addEventListener("keydown", (e) => {
@@ -2536,33 +2587,6 @@
 
     document.getElementById("year").textContent = String(new Date().getFullYear());
 </script>
-
-<form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
-    <input type="hidden" name="form-name" value="contact">
-    <input name="name"><input name="email">
-    <input name="subject"><textarea name="message"></textarea>
-</form>
-
-<div id="pdf_lightbox" aria-modal="true" role="dialog" aria-label="Document viewer">
-    <button id="pdf_lightbox_close" aria-label="Close document">&times;</button>
-    <div id="pdf_lightbox_inner">
-        <div id="pdf_lightbox_loading">
-            <span>Loading document</span>
-            <div id="pdf_loading_dots">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <iframe id="pdf_lightbox_frame" title="Document viewer"></iframe>
-    </div>
-</div>
-
-<div id="img_lightbox" aria-modal="true" role="dialog" aria-label="Image viewer">
-    <button id="img_lightbox_close" aria-label="Close image">&times;</button>
-    <div id="img_lightbox_inner">
-        <img id="img_lightbox_img" src="" alt="">
-        <p id="img_lightbox_caption"></p>
-    </div>
-</div>
 
 </body>
 </html>
