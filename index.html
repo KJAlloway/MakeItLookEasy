@@ -47,6 +47,17 @@
             }
         }
 
+        @keyframes pdf_dot_pulse {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scaleY(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleY(1.6);
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -76,12 +87,13 @@
         }
 
         #nav_bar {
-            padding: 10px;
+            padding: 10px 20px;
             position: fixed;
-            width: 95vw;
+            width: calc(100% - 40px);
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            align-items: center;
             background-color: #000;
             z-index: 2000;
 
@@ -96,8 +108,9 @@
                 flex-direction: row;
                 gap: 40px;
                 list-style: none;
+                margin: 0;
+                padding: 0;
             }
-
 
             & a::before,
             & a::after {
@@ -124,8 +137,137 @@
             & a.active::after {
                 opacity: 1;
             }
-        }
 
+            & #nav_left {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            & #nav_chevron {
+                display: none;
+                background: none;
+                border: none;
+                color: var(--white);
+                cursor: pointer;
+                padding: 4px;
+                align-items: center;
+                justify-content: center;
+                opacity: 0.6;
+                transition: opacity 120ms ease;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                & #nav_chevron_icon {
+                    transition: transform 200ms ease;
+                    display: block;
+                }
+
+                &.open #nav_chevron_icon {
+                    transform: rotate(180deg);
+                }
+            }
+
+            & #nav_dropdown {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #000;
+                border-top: 1px solid #1a1a1a;
+                border-bottom: 1px solid #1a1a1a;
+                padding: 1rem 20px;
+                box-sizing: border-box;
+
+                &.open {
+                    display: block;
+                }
+
+                & ul {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0;
+                }
+
+                & li {
+                    display: block;
+                }
+
+                & li a {
+                    display: inline-block;
+                    padding: 0.6rem 0;                    font-size: 0.75rem;
+                    letter-spacing: 0.2em;
+                    text-transform: uppercase;
+                    color: var(--white);
+                    text-decoration: none;
+                    padding: 0.6rem 0;
+                    position: relative;
+                    transition: color 120ms ease;
+
+                    &::before,
+                    &::after {
+                        opacity: 0;
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        color: var(--gold);
+                        transition: opacity 120ms ease;
+                    }
+
+                    &::before {
+                        content: "[";
+                        left: -1ch;
+                    }
+
+                    &::after {
+                        content: "]";
+                        right: -1ch;
+                    }
+
+                    &:hover::before,
+                    &:hover::after,
+                    &.active::before,
+                    &.active::after {
+                        opacity: 1;
+                    }
+
+                    &.active {
+                        color: var(--gold);
+                    }
+                }
+
+                & #nav_dropdown_sections li a {
+                    font-size: 0.65rem;
+                    color: #888;
+
+                    &.active {
+                        color: var(--gold);
+                    }
+                }
+
+                & .nav_dropdown_divider {
+                    height: 1px;
+                    background-color: #222;
+                    margin: 0.6rem 0;
+                }
+            }
+
+            @media (max-width: 1380px) {
+                & #nav_list {
+                    display: none;
+                }
+
+                & #nav_chevron {
+                    display: flex;
+                }
+            }
+        }
 
         #home {
             & #hero {
@@ -1033,7 +1175,7 @@
         }
 
         #img_lightbox {
-            display: flex;  /* always flex, never none */
+            display: flex; /* always flex, never none */
             position: fixed;
             inset: 0;
             z-index: 3000;
@@ -1113,28 +1255,37 @@
             }
         }
 
-        @keyframes pdf_dot_pulse {
-            0%, 100% {
-                opacity: 0.2;
-                transform: scaleY(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scaleY(1.6);
-            }
-        }    </style>
+    </style>
 </head>
 
 <body>
 
 <nav id="nav_bar">
-    <a id="nav_brand" href="#home">KELSEN ALLOWAY</a>
+    <div id="nav_left">
+        <a id="nav_brand" href="#home">KELSEN ALLOWAY</a>
+        <button id="nav_chevron" aria-label="Open navigation" aria-expanded="false">
+            <svg id="nav_chevron_icon" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,4 6,8 10,4"/>
+            </svg>
+        </button>
+    </div>
     <ul id="nav_list">
         <li><a href="#about">ABOUT</a></li>
         <li><a href="#resume">RESUME</a></li>
         <li><a href="#projects">PROJECTS</a></li>
         <li><a href="#contact">CONTACT</a></li>
     </ul>
+    <div id="nav_dropdown">
+        <ul id="nav_dropdown_main">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#resume">RESUME</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+        <div class="nav_dropdown_divider" id="nav_dropdown_divider" style="display:none;"></div>
+        <ul id="nav_dropdown_sections"></ul>
+    </div>
 </nav>
 
 <main>
@@ -1268,7 +1419,7 @@
             </a>
         </div>
 
-        <div class="resume_section">
+        <div class="resume_section" id="resume-education">
             <p class="resume_section_title">Education</p>
             <div class="resume_entry">
                 <p class="entry_title">Computer Systems Technology (CST) Diploma</p>
@@ -1291,7 +1442,7 @@
             </div>
         </div>
 
-        <div class="resume_section">
+        <div class="resume_section" id="resume-projects">
             <p class="resume_section_title">Projects</p>
             <div class="resume_entry">
                 <p class="entry_title">Agile Team Web Application <span style="color:#555; font-weight:400;">— CST Projects</span>
@@ -1364,7 +1515,7 @@
             </div>
         </div>
 
-        <div class="resume_section">
+        <div class="resume_section" id="resume-skills">
             <p class="resume_section_title">Technical Skills</p>
             <div class="resume_skills_grid">
                 <div>
@@ -1397,7 +1548,7 @@
             </div>
         </div>
 
-        <div class="resume_section">
+        <div class="resume_section" id="resume-experience">
             <p class="resume_section_title">Operational & Leadership Experience</p>
             <div class="resume_entry">
                 <p class="entry_title">JOEY Bentall One <span style="color:#555; font-weight:400;">— Bartender</span>
@@ -1426,7 +1577,7 @@
             </div>
         </div>
 
-        <div class="resume_section">
+        <div class="resume_section" id="resume-certs">
             <p class="resume_section_title">Certifications</p>
             <div class="resume_entry">
                 <p class="entry_title">Red Seal Certification</p>
@@ -1460,7 +1611,10 @@
                          aria-label="View full image">
                         <img src="assets/project_screenshots/inner_wilds.png" alt="Inner Wilds screenshot">
                         <div class="project_img_hint">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                            </svg>
                             <span>View full size</span>
                         </div>
                     </div>
@@ -1530,7 +1684,10 @@
                          aria-label="View full image">
                         <img src="assets/project_screenshots/stack.png" alt="STACK app screenshot">
                         <div class="project_img_hint">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                            </svg>
                             <span>View full size</span>
                         </div>
                     </div>
@@ -1607,7 +1764,10 @@
                          aria-label="View full image">
                         <img src="assets/project_screenshots/unicorn_API.png" alt="Unicorn API screenshot">
                         <div class="project_img_hint">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                            </svg>
                             <span>View full size</span>
                         </div>
                     </div>
@@ -1937,9 +2097,11 @@
         </form>
 
         <div class="contact_links">
-            <a class="contact_link_item" href="/cdn-cgi/l/email-protection#723938331e1e1d05130b321f1319171b061e1d1d191713010b5c1113">
+            <a class="contact_link_item"
+               href="/cdn-cgi/l/email-protection#723938331e1e1d05130b321f1319171b061e1d1d191713010b5c1113">
                 <span class="contact_link_lbl">Email</span>
-                <span class="contact_link_val"><span class="__cf_email__" data-cfemail="d8939299b4b4b7afb9a198b5b9b3bdb1acb4b7b7b3bdb9aba1f6bbb9">[email&#160;protected]</span></span>
+                <span class="contact_link_val"><span class="__cf_email__"
+                                                     data-cfemail="d8939299b4b4b7afb9a198b5b9b3bdb1acb4b7b7b3bdb9aba1f6bbb9">[email&#160;protected]</span></span>
             </a>
             <a class="contact_link_item" href="https://github.com/KJAlloway" target="_blank" rel="noopener">
                 <span class="contact_link_lbl">GitHub</span>
@@ -1959,7 +2121,8 @@
         <a href="https://github.com/KJAlloway" target="_blank" rel="noopener" aria-label="GitHub">
             <img src="assets/icons/brand-github.svg" alt="GitHub">
         </a>
-        <a href="/cdn-cgi/l/email-protection#bcf7f6fdd0d0d3cbddc5fcd1ddd7d9d5c8d0d3d3d7d9ddcfc592dfdd" aria-label="Email">
+        <a href="/cdn-cgi/l/email-protection#bcf7f6fdd0d0d3cbddc5fcd1ddd7d9d5c8d0d3d3d7d9ddcfc592dfdd"
+           aria-label="Email">
             <img src="assets/icons/mail.svg" alt="Email">
         </a>
         <a href="https://www.linkedin.com/in/KJAlloway" target="_blank" rel="noopener" aria-label="LinkedIn">
@@ -2000,7 +2163,8 @@
     </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
 
     const SITE_BASE_URL = window.location.origin;
 
@@ -2032,46 +2196,118 @@
     }
 
     const PROJECT_IDS = [
-        "inner-wilds",
-        "stack",
-        "unicorn-api",
-        "business-analysis",
-        "website-proposal",
-        "heuristic-analysis",
+        "inner-wilds", "stack", "unicorn-api",
+        "business-analysis", "website-proposal", "heuristic-analysis"
     ];
+
+    const PAGE_SECTIONS = {
+        projects: [
+            { id: "inner-wilds",        label: "Inner Wilds" },
+            { id: "stack",              label: "STACK" },
+            { id: "unicorn-api",        label: "Unicorn API" },
+            { id: "business-analysis",  label: "Business Analysis" },
+            { id: "website-proposal",   label: "Website Proposal" },
+            { id: "heuristic-analysis", label: "Heuristic Analysis" },
+        ],
+        resume: [
+            { id: "resume-education",   label: "Education" },
+            { id: "resume-projects",    label: "Projects" },
+            { id: "resume-skills",      label: "Technical Skills" },
+            { id: "resume-experience",  label: "Experience" },
+            { id: "resume-certs",       label: "Certifications" },
+        ],
+    };
 
     function set_active_page() {
         const hash = location.hash ? location.hash.slice(1) : "home";
-
-        // Check if this hash is a project deep-link
         const is_project = PROJECT_IDS.includes(hash);
         const page = is_project ? "projects" : hash;
 
         document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-        document.querySelectorAll("#nav_bar a").forEach(a => a.classList.remove("active"));
+        document.querySelectorAll("#nav_list a, #nav_dropdown_main a").forEach(a => a.classList.remove("active"));
 
         const active_page = document.getElementById(page) || document.getElementById("home");
-        active_page.classList.add("active");
+        if (active_page) active_page.classList.add("active");
 
-        const active_link =
-            document.querySelector(`#nav_bar a[href="#${page}"]`) ||
-            document.querySelector(`#nav_bar a[href="#home"]`);
-        if (active_link) active_link.classList.add("active");
+        const selector = `a[href="#${page}"]`;
+        document.querySelectorAll(`#nav_list ${selector}, #nav_dropdown_main ${selector}, #nav_left ${selector}`)
+            .forEach(a => a.classList.add("active"));
 
-        if (page !== "home" && typeof home_gallery !== "undefined") {
-            home_gallery.reset_home_state();
-        }
+        if (page !== "home") home_gallery.reset_home_state();
 
-        // If it's a project deep-link, scroll to that project after a brief paint delay
         if (is_project) {
             window.setTimeout(() => {
                 const target = document.getElementById(hash);
-                if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
+                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 50);
         } else {
             window.scrollTo(0, 0);
         }
+
+        update_dropdown_sections(page);
     }
+
+    function update_dropdown_sections(page) {
+        const sections_list = document.getElementById("nav_dropdown_sections");
+        const divider = document.getElementById("nav_dropdown_divider");
+        const sections = PAGE_SECTIONS[page];
+
+        sections_list.innerHTML = "";
+
+        if (sections && sections.length) {
+            divider.style.display = "block";
+            sections.forEach(({ id, label }) => {
+                const li = document.createElement("li");
+                const a = document.createElement("a");
+                a.href = `#${id}`;
+                a.textContent = label;
+                a.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const target = document.getElementById(id);
+                    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    history.pushState(null, "", `#${id}`);
+                });
+                li.appendChild(a);
+                sections_list.appendChild(li);
+            });
+        } else {
+            divider.style.display = "none";
+        }
+    }
+
+    function close_dropdown() {
+        const chevron = document.getElementById("nav_chevron");
+        const dropdown = document.getElementById("nav_dropdown");
+        chevron.classList.remove("open");
+        dropdown.classList.remove("open");
+        chevron.setAttribute("aria-expanded", "false");
+    }
+
+    function initialize_nav_dropdown() {
+        const chevron = document.getElementById("nav_chevron");
+        const dropdown = document.getElementById("nav_dropdown");
+
+        chevron.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const is_open = dropdown.classList.contains("open");
+            if (is_open) {
+                close_dropdown();
+            } else {
+                dropdown.classList.add("open");
+                chevron.classList.add("open");
+                chevron.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!dropdown.contains(e.target) && e.target !== chevron) {
+                close_dropdown();
+            }
+        });
+        
+    }
+
+    initialize_nav_dropdown();
 
     function initialize_projects_nav() {
         const nav_links = document.querySelectorAll(".projects_nav_link");
@@ -2099,6 +2335,7 @@
         nav_links.forEach(link => {
             link.addEventListener("click", (e) => {
                 e.preventDefault();
+                close_dropdown();
                 const target_id = link.dataset.target;
                 const target = document.getElementById(target_id);
                 if (target) {
