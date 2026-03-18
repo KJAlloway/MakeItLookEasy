@@ -103,8 +103,7 @@
             align-items: center;
             background-color: #000;
             z-index: 2000;
-            transition: left 280ms cubic-bezier(.2, .9, .2, 1),
-                        width 280ms cubic-bezier(.2, .9, .2, 1);
+            /* nav_bar no longer shifts with the drawer — static position */
 
             & a {
                 text-decoration: none;
@@ -186,10 +185,7 @@
             }
         }
 
-        body.drawer_open #nav_bar {
-            left: 220px;
-            width: calc(100% - 220px - 40px);
-        }
+        /* nav_bar stays fixed — only main content shifts with the drawer */
 
         #nav_drawer {
             position: fixed;
@@ -658,7 +654,7 @@
                 }
 
                 & .projects_nav_link {
-                    display: block;
+                    display: inline-block;
                     font-family: var(--font-tech), monospace;
                     font-size: 0.65rem;
                     letter-spacing: 0.12em;
@@ -1950,10 +1946,10 @@
                         <dt>Situation</dt>
                         <dd>Handmade Barber Studio, a downtown Vancouver barbershop, had a functional booking website
                             that wasn't performing as a business asset. In a competitive market where clients evaluate
-                            service providers before ever walking in, the site lacked portfolio integration, had a
-                            friction-heavy booking flow, contained broken links, and was poorly optimised for local
-                            search — all documented through a structured UX and technical audit conducted for BCIT's
-                            business communications course.
+                            service providers before ever walking in, the site had friction points across the booking
+                            flow, lacked supporting client resources, and was poorly optimised for local search — all
+                            documented through a structured UX and technical audit conducted for BCIT's business
+                            communications course.
                         </dd>
                         <dt>Task</dt>
                         <dd>As one of four team members, contribute to a research-backed redevelopment proposal that
@@ -1963,11 +1959,11 @@
                         </dd>
                         <dt>Action</dt>
                         <dd>Applied Nielsen's usability heuristics and web credibility research to evaluate the existing
-                            site systematically. Analysed the booking interface and found that clients were selecting
-                            barbers by name alone — no photos, no bios, no portfolio — creating uncertainty that pushed
-                            users to Instagram to evaluate quality before booking. Mapped the full booking flow to
-                            identify drop-off points. Benchmarked against competitor barbershop sites to establish what
-                            the market standard looked like. Structured findings into four actionable areas: brand
+                            site systematically. Analysed the booking interface and found the site lacked concrete
+                            resources for client reference — no bios, portfolios, or visual evidence of work — creating
+                            uncertainty that pushed users to Instagram to fill the gap before booking. Mapped the full
+                            booking flow to identify drop-off points and benchmarked against competitor sites to
+                            establish market expectations. Structured findings into four actionable areas: brand
                             visibility and credibility, booking flow clarity, technical reliability, and search
                             discoverability — each with current-state evidence, business impact reasoning, and concrete
                             recommendations.
@@ -2218,19 +2214,19 @@
 
     const PAGE_SECTIONS = {
         projects: [
-            { id: "inner-wilds",        label: "Inner Wilds" },
-            { id: "stack",              label: "STACK" },
-            { id: "unicorn-api",        label: "Unicorn API" },
-            { id: "business-analysis",  label: "Business Analysis" },
-            { id: "website-proposal",   label: "Website Proposal" },
-            { id: "heuristic-analysis", label: "Heuristic Analysis" },
+            {id: "inner-wilds", label: "Inner Wilds"},
+            {id: "stack", label: "STACK"},
+            {id: "unicorn-api", label: "Unicorn API"},
+            {id: "business-analysis", label: "Business Analysis"},
+            {id: "website-proposal", label: "Website Proposal"},
+            {id: "heuristic-analysis", label: "Heuristic Analysis"},
         ],
         resume: [
-            { id: "resume-education",   label: "Education" },
-            { id: "resume-projects",    label: "Projects" },
-            { id: "resume-skills",      label: "Technical Skills" },
-            { id: "resume-experience",  label: "Experience" },
-            { id: "resume-certs",       label: "Certifications" },
+            {id: "resume-education", label: "Education"},
+            {id: "resume-projects", label: "Projects"},
+            {id: "resume-skills", label: "Technical Skills"},
+            {id: "resume-experience", label: "Experience"},
+            {id: "resume-certs", label: "Certifications"},
         ],
     };
 
@@ -2250,29 +2246,63 @@
         document.body.classList.contains("drawer_open") ? close_drawer() : open_drawer();
     }
 
+    let drawer_section_observer = null;
+
     function update_drawer_sections(page) {
         const sections_list = document.getElementById("drawer_sections");
         const divider = document.getElementById("drawer_divider");
         const sections = PAGE_SECTIONS[page];
 
+        // Disconnect any previous observer
+        if (drawer_section_observer) {
+            drawer_section_observer.disconnect();
+            drawer_section_observer = null;
+        }
+
         sections_list.innerHTML = "";
 
         if (sections && sections.length) {
             divider.style.display = "block";
-            sections.forEach(({ id, label }) => {
+            sections.forEach(({id, label}) => {
                 const li = document.createElement("li");
                 const a = document.createElement("a");
                 a.href = `#${id}`;
                 a.textContent = label;
+                a.dataset.target = id;
                 a.addEventListener("click", (e) => {
                     e.preventDefault();
                     const target = document.getElementById(id);
-                    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
                     history.pushState(null, "", `#${id}`);
                 });
                 li.appendChild(a);
                 sections_list.appendChild(li);
             });
+
+            // Default: activate first section immediately
+            const first_link = sections_list.querySelector("a");
+            if (first_link) first_link.classList.add("active");
+
+            // Scroll-spy observer for drawer section links
+            const observed_elements = sections
+                .map(({id}) => document.getElementById(id))
+                .filter(Boolean);
+
+            drawer_section_observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        sections_list.querySelectorAll("a").forEach(a => a.classList.remove("active"));
+                        const active_link = sections_list.querySelector(`a[data-target="${entry.target.id}"]`);
+                        if (active_link) active_link.classList.add("active");
+                    }
+                });
+            }, {
+                rootMargin: "-30% 0px -60% 0px",
+                threshold: 0
+            });
+
+            observed_elements.forEach(el => drawer_section_observer.observe(el));
+
         } else {
             divider.style.display = "none";
         }
@@ -2298,7 +2328,7 @@
         if (is_project) {
             window.setTimeout(() => {
                 const target = document.getElementById(hash);
-                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
             }, 50);
         } else {
             window.scrollTo(0, 0);
@@ -2321,6 +2351,9 @@
         const project_entries = document.querySelectorAll(".project_entry");
 
         if (!nav_links.length || !project_entries.length) return;
+
+        // Default: activate first nav item immediately
+        if (nav_links.length) nav_links[0].classList.add("active");
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
