@@ -2608,11 +2608,14 @@
         gallery_dock_element.addEventListener("pointermove", pointer_tracker);
 
         gallery_dock_element.addEventListener("wheel", (event) => {
-            if (!event.shiftKey && event.deltaX === 0) return;
+            const is_shift_scroll = event.shiftKey && event.deltaX === 0;
+            const is_horizontal = event.deltaX !== 0;
+            if (!is_shift_scroll && !is_horizontal) return;
             event.preventDefault();
+            const delta = (event.deltaX || event.deltaY) * (event.deltaMode === 1 ? 20 : 1);
             gallery_dock_element.scrollBy({
-                left: (event.deltaX || event.deltaY) * (event.deltaMode === 1 ? 20 : 1),
-                behavior: "smooth"
+                left: delta,
+                behavior: is_shift_scroll ? "smooth" : "instant"
             });
         }, {passive: false});
 
