@@ -76,6 +76,11 @@
         main {
             min-height: 100vh;
             padding: 40px 10px;
+            transition: margin-left 280ms cubic-bezier(.2, .9, .2, 1);
+        }
+
+        body.drawer_open main {
+            margin-left: 220px;
         }
 
         .page {
@@ -89,6 +94,8 @@
         #nav_bar {
             padding: 10px 20px;
             position: fixed;
+            top: 0;
+            left: 0;
             width: calc(100% - 40px);
             display: flex;
             flex-direction: row;
@@ -96,6 +103,8 @@
             align-items: center;
             background-color: #000;
             z-index: 2000;
+            transition: left 280ms cubic-bezier(.2, .9, .2, 1),
+                        width 280ms cubic-bezier(.2, .9, .2, 1);
 
             & a {
                 text-decoration: none;
@@ -161,100 +170,8 @@
                 }
 
                 & #nav_chevron_icon {
-                    transition: transform 200ms ease;
+                    transition: transform 280ms cubic-bezier(.2, .9, .2, 1);
                     display: block;
-                }
-
-                &.open #nav_chevron_icon {
-                    transform: rotate(180deg);
-                }
-            }
-
-            & #nav_dropdown {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: #000;
-                border-top: 1px solid #1a1a1a;
-                border-bottom: 1px solid #1a1a1a;
-                padding: 1rem 20px;
-                box-sizing: border-box;
-
-                &.open {
-                    display: block;
-                }
-
-                & ul {
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0;
-                }
-
-                & li {
-                    display: block;
-                }
-
-                & li a {
-                    display: inline-block;
-                    padding: 0.6rem 0;                    font-size: 0.75rem;
-                    letter-spacing: 0.2em;
-                    text-transform: uppercase;
-                    color: var(--white);
-                    text-decoration: none;
-                    padding: 0.6rem 0;
-                    position: relative;
-                    transition: color 120ms ease;
-
-                    &::before,
-                    &::after {
-                        opacity: 0;
-                        position: absolute;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        color: var(--gold);
-                        transition: opacity 120ms ease;
-                    }
-
-                    &::before {
-                        content: "[";
-                        left: -1ch;
-                    }
-
-                    &::after {
-                        content: "]";
-                        right: -1ch;
-                    }
-
-                    &:hover::before,
-                    &:hover::after,
-                    &.active::before,
-                    &.active::after {
-                        opacity: 1;
-                    }
-
-                    &.active {
-                        color: var(--gold);
-                    }
-                }
-
-                & #nav_dropdown_sections li a {
-                    font-size: 0.65rem;
-                    color: #888;
-
-                    &.active {
-                        color: var(--gold);
-                    }
-                }
-
-                & .nav_dropdown_divider {
-                    height: 1px;
-                    background-color: #222;
-                    margin: 0.6rem 0;
                 }
             }
 
@@ -267,6 +184,104 @@
                     display: flex;
                 }
             }
+        }
+
+        body.drawer_open #nav_bar {
+            left: 220px;
+            width: calc(100% - 220px - 40px);
+        }
+
+        #nav_drawer {
+            position: fixed;
+            top: 0;
+            left: -220px;
+            width: 220px;
+            height: 100vh;
+            background-color: #000;
+            border-right: 1px solid #1a1a1a;
+            z-index: 1999;
+            padding: 80px 30px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            transition: left 280ms cubic-bezier(.2, .9, .2, 1);
+            overflow-y: auto;
+
+            & ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+
+            & li {
+                display: block;
+            }
+
+            & li a {
+                display: inline-block;
+                font-family: var(--font-tech), monospace;
+                font-size: 0.75rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--white);
+                text-decoration: none;
+                padding: 0.6rem 0;
+                position: relative;
+                transition: color 120ms ease;
+
+                &::before,
+                &::after {
+                    opacity: 0;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    color: var(--gold);
+                    transition: opacity 120ms ease;
+                }
+
+                &::before {
+                    content: "[";
+                    left: -1ch;
+                }
+
+                &::after {
+                    content: "]";
+                    right: -1ch;
+                }
+
+                &:hover::before,
+                &:hover::after,
+                &.active::before,
+                &.active::after {
+                    opacity: 1;
+                }
+
+                &.active {
+                    color: var(--gold);
+                }
+            }
+
+            & #drawer_sections li a {
+                font-size: 0.65rem;
+                color: #888;
+
+                &.active {
+                    color: var(--gold);
+                }
+            }
+
+            & .drawer_divider {
+                height: 1px;
+                background-color: #222;
+                margin: 0.8rem 0;
+            }
+        }
+
+        body.drawer_open #nav_drawer {
+            left: 0;
         }
 
         #home {
@@ -1266,7 +1281,7 @@
         <button id="nav_chevron" aria-label="Open navigation" aria-expanded="false">
             <svg id="nav_chevron_icon" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor"
                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="2,4 6,8 10,4"/>
+                <polyline points="4,2 8,6 4,10"/>
             </svg>
         </button>
     </div>
@@ -1276,17 +1291,18 @@
         <li><a href="#projects">PROJECTS</a></li>
         <li><a href="#contact">CONTACT</a></li>
     </ul>
-    <div id="nav_dropdown">
-        <ul id="nav_dropdown_main">
-            <li><a href="#about">ABOUT</a></li>
-            <li><a href="#resume">RESUME</a></li>
-            <li><a href="#projects">PROJECTS</a></li>
-            <li><a href="#contact">CONTACT</a></li>
-        </ul>
-        <div class="nav_dropdown_divider" id="nav_dropdown_divider" style="display:none;"></div>
-        <ul id="nav_dropdown_sections"></ul>
-    </div>
 </nav>
+
+<aside id="nav_drawer">
+    <ul id="drawer_main">
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#resume">RESUME</a></li>
+        <li><a href="#projects">PROJECTS</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+    </ul>
+    <div class="drawer_divider" id="drawer_divider" style="display:none;"></div>
+    <ul id="drawer_sections"></ul>
+</aside>
 
 <main>
     <section id="home" class="page">
@@ -1321,7 +1337,7 @@
         <section id="home_image_gallery" aria-label="Featured Work">
             <div id="gallery_dock">
                 <a class="gallery_image" href="#inner-wilds" aria-label="Inner Wilds"
-                   data-title="Inner Wilds"
+                   data-title="Inner|Wilds"
                    data-subtitle="Python • time-loop • ASCII UI"
                    data-tagline="A lone pilot. A system caught in a loop. Get out.">
                     <img src="assets/project_screenshots/inner_wilds.png" alt="Inner Wilds screenshot">
@@ -1349,7 +1365,7 @@
                 </a>
 
                 <a class="gallery_image" href="#website-proposal" aria-label="Website Redevelopment Proposal"
-                   data-title="Website|Proposal"
+                   data-title="Website|Redevelopment"
                    data-subtitle="UX research • heuristics • strategy"
                    data-tagline="A full UX audit and redevelopment brief for a real client.">
                     <img src="assets/project_screenshots/website_redev_proposal.png"
@@ -2218,38 +2234,25 @@
         ],
     };
 
-    function set_active_page() {
-        const hash = location.hash ? location.hash.slice(1) : "home";
-        const is_project = PROJECT_IDS.includes(hash);
-        const page = is_project ? "projects" : hash;
-
-        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-        document.querySelectorAll("#nav_list a, #nav_dropdown_main a").forEach(a => a.classList.remove("active"));
-
-        const active_page = document.getElementById(page) || document.getElementById("home");
-        if (active_page) active_page.classList.add("active");
-
-        const selector = `a[href="#${page}"]`;
-        document.querySelectorAll(`#nav_list ${selector}, #nav_dropdown_main ${selector}, #nav_left ${selector}`)
-            .forEach(a => a.classList.add("active"));
-
-        if (page !== "home") home_gallery.reset_home_state();
-
-        if (is_project) {
-            window.setTimeout(() => {
-                const target = document.getElementById(hash);
-                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 50);
-        } else {
-            window.scrollTo(0, 0);
-        }
-
-        update_dropdown_sections(page);
+    function open_drawer() {
+        document.body.classList.add("drawer_open");
+        document.getElementById("nav_chevron").setAttribute("aria-expanded", "true");
+        document.getElementById("nav_chevron_icon").style.transform = "rotate(180deg)";
     }
 
-    function update_dropdown_sections(page) {
-        const sections_list = document.getElementById("nav_dropdown_sections");
-        const divider = document.getElementById("nav_dropdown_divider");
+    function close_drawer() {
+        document.body.classList.remove("drawer_open");
+        document.getElementById("nav_chevron").setAttribute("aria-expanded", "false");
+        document.getElementById("nav_chevron_icon").style.transform = "rotate(0deg)";
+    }
+
+    function toggle_drawer() {
+        document.body.classList.contains("drawer_open") ? close_drawer() : open_drawer();
+    }
+
+    function update_drawer_sections(page) {
+        const sections_list = document.getElementById("drawer_sections");
+        const divider = document.getElementById("drawer_divider");
         const sections = PAGE_SECTIONS[page];
 
         sections_list.innerHTML = "";
@@ -2275,39 +2278,43 @@
         }
     }
 
-    function close_dropdown() {
-        const chevron = document.getElementById("nav_chevron");
-        const dropdown = document.getElementById("nav_dropdown");
-        chevron.classList.remove("open");
-        dropdown.classList.remove("open");
-        chevron.setAttribute("aria-expanded", "false");
+    function set_active_page() {
+        const hash = location.hash ? location.hash.slice(1) : "home";
+        const is_project = PROJECT_IDS.includes(hash);
+        const page = is_project ? "projects" : hash;
+
+        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+        document.querySelectorAll("#nav_list a, #drawer_main a").forEach(a => a.classList.remove("active"));
+
+        const active_page = document.getElementById(page) || document.getElementById("home");
+        if (active_page) active_page.classList.add("active");
+
+        const selector = `a[href="#${page}"]`;
+        document.querySelectorAll(`#nav_list ${selector}, #drawer_main ${selector}, #nav_left ${selector}`)
+            .forEach(a => a.classList.add("active"));
+
+        if (page !== "home") home_gallery.reset_home_state();
+
+        if (is_project) {
+            window.setTimeout(() => {
+                const target = document.getElementById(hash);
+                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 50);
+        } else {
+            window.scrollTo(0, 0);
+        }
+
+        update_drawer_sections(page);
     }
 
-    function initialize_nav_dropdown() {
-        const chevron = document.getElementById("nav_chevron");
-        const dropdown = document.getElementById("nav_dropdown");
-
-        chevron.addEventListener("click", (e) => {
+    function initialize_nav_drawer() {
+        document.getElementById("nav_chevron").addEventListener("click", (e) => {
             e.stopPropagation();
-            const is_open = dropdown.classList.contains("open");
-            if (is_open) {
-                close_dropdown();
-            } else {
-                dropdown.classList.add("open");
-                chevron.classList.add("open");
-                chevron.setAttribute("aria-expanded", "true");
-            }
+            toggle_drawer();
         });
-
-        document.addEventListener("click", (e) => {
-            if (!dropdown.contains(e.target) && e.target !== chevron) {
-                close_dropdown();
-            }
-        });
-        
     }
 
-    initialize_nav_dropdown();
+    initialize_nav_drawer();
 
     function initialize_projects_nav() {
         const nav_links = document.querySelectorAll(".projects_nav_link");
@@ -2335,7 +2342,6 @@
         nav_links.forEach(link => {
             link.addEventListener("click", (e) => {
                 e.preventDefault();
-                close_dropdown();
                 const target_id = link.dataset.target;
                 const target = document.getElementById(target_id);
                 if (target) {
