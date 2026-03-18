@@ -473,6 +473,279 @@
             }
         }
 
+        #projects {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 60px;
+        }
+
+        #projects_nav {
+            position: fixed;
+            left: max(1rem, calc((100vw - 1100px) / 2 - 160px));
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+
+            @media (max-width: 1380px) {
+                display: none;
+            }
+
+            & ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+
+            & .projects_nav_link {
+                display: block;
+                font-family: var(--font-tech), monospace;
+                font-size: 0.65rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #444;
+                text-decoration: none;
+                padding: 0.3rem 0;
+                position: relative;
+                transition: color 120ms ease;
+
+                &::before {
+                    content: "[";
+                    position: absolute;
+                    left: -1.2ch;
+                    color: var(--gold);
+                    opacity: 0;
+                    transition: opacity 120ms ease;
+                }
+
+                &::after {
+                    content: "]";
+                    position: absolute;
+                    right: -1.2ch;
+                    color: var(--gold);
+                    opacity: 0;
+                    transition: opacity 120ms ease;
+                }
+
+                &:hover,
+                &.active {
+                    color: var(--white);
+                }
+
+                &:hover::before,
+                &:hover::after,
+                &.active::before,
+                &.active::after {
+                    opacity: 1;
+                }
+
+                &.active {
+                    color: var(--gold);
+                }
+            }
+        }
+
+        .project_entry {
+            padding: 80px 0;
+            border-bottom: 1px solid #1a1a1a;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .project_layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+
+            @media (max-width: 860px) {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .project_hero_image {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 4px;
+
+            & img {
+                width: 100%;
+                height: auto;
+                display: block;
+                filter: grayscale(20%);
+                transition: filter 300ms ease;
+            }
+
+            &:hover img {
+                filter: grayscale(0%);
+            }
+        }
+
+        .project_hero_clickable {
+            cursor: pointer;
+            position: relative;
+
+            & .project_img_hint {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                background-color: rgba(0, 0, 0, 0.5);
+                color: var(--white);
+                font-family: var(--font-tech), monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                opacity: 0;
+                transition: opacity 200ms ease;
+            }
+
+            &:hover .project_img_hint,
+            &:focus .project_img_hint {
+                opacity: 1;
+            }
+
+            &:focus {
+                outline: 1px solid var(--gold);
+                outline-offset: 2px;
+            }
+        }
+        .project_hero_pdf {
+            cursor: pointer;
+            position: relative;
+
+            & .project_pdf_hint {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                background-color: rgba(0, 0, 0, 0.6);
+                color: var(--white);
+                font-family: var(--font-tech), monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                opacity: 0;
+                transition: opacity 200ms ease;
+            }
+
+            &:hover .project_pdf_hint,
+            &:focus .project_pdf_hint {
+                opacity: 1;
+            }
+
+            &:focus {
+                outline: 1px solid var(--gold);
+                outline-offset: 2px;
+            }
+        }
+
+        .project_label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .project_title {
+            font-family: var(--font-title), sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.05;
+            margin-bottom: 1.2rem;
+        }
+
+        .project_tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project_tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            padding: 0.3rem 0.7rem;
+            border: 1px solid #333;
+            color: #888;
+        }
+
+        .project_divider {
+            width: 2rem;
+            height: 2px;
+            background-color: var(--gold);
+            margin-bottom: 1.8rem;
+        }
+
+        .project_star {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.6rem 1.4rem;
+            margin-bottom: 2rem;
+
+            & dt {
+                font-size: 0.65rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--gold);
+                padding-top: 0.15em;
+                white-space: nowrap;
+            }
+
+            & dd {
+                font-size: 0.82rem;
+                line-height: 1.75;
+                color: #bbb;
+                margin: 0;
+            }
+        }
+
+        .project_links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project_link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            border: 1px solid var(--gold);
+            padding: 0.5rem 1rem;
+            transition: background-color 120ms ease, color 120ms ease;
+
+            & svg {
+                flex-shrink: 0;
+            }
+
+            &:hover {
+                background-color: var(--gold);
+                color: var(--black);
+
+                & svg {
+                    stroke: var(--black);
+                }
+            }
+        }
+
         #contact {
             max-width: 700px;
             margin: 0 auto;
@@ -664,7 +937,177 @@
                 letter-spacing: 0.05em;
             }
         }
-    </style>
+
+        #pdf_lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background-color: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+
+            &.open {
+                display: flex;
+            }
+
+            & #pdf_lightbox_inner {
+                position: relative;
+                width: 100%;
+                max-width: 900px;
+                height: 90vh;
+                background: #111;
+                border: 1px solid #333;
+            }
+
+            & #pdf_lightbox_frame {
+                width: 100%;
+                height: 100%;
+                border: none;
+                display: block;
+            }
+
+            & #pdf_lightbox_close {
+                position: fixed;
+                top: 1.2rem;
+                right: 1.2rem;
+                z-index: 3100;
+                background: #000;
+                border: 1px solid #555;
+                color: var(--white);
+                font-size: 1.4rem;
+                line-height: 1;
+                width: 2.2rem;
+                height: 2.2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-family: var(--font-tech), monospace;
+                transition: border-color 120ms ease, color 120ms ease;
+
+                &:hover {
+                    border-color: var(--gold);
+                    color: var(--gold);
+                }
+            }
+
+            & #pdf_lightbox_loading {
+                display: none;
+                position: absolute;
+                inset: 0;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 1rem;
+                background: #111;
+                font-family: var(--font-tech), monospace;
+                font-size: 0.75rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: #555;
+                z-index: 1;
+            }
+
+            & #pdf_loading_dots {
+                display: flex;
+                gap: 0.4rem;
+
+                & span {
+                    width: 4px;
+                    height: 4px;
+                    background: var(--gold);
+                    animation: pdf_dot_pulse 1.2s ease-in-out infinite;
+
+                    &:nth-child(2) {
+                        animation-delay: 0.2s;
+                    }
+
+                    &:nth-child(3) {
+                        animation-delay: 0.4s;
+                    }
+                }
+            }
+        }
+
+        #img_lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background-color: rgba(0, 0, 0, 0.92);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+
+            &.open {
+                display: flex;
+            }
+
+            & #img_lightbox_inner {
+                position: relative;
+                max-width: 1100px;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            & #img_lightbox_img {
+                width: 100%;
+                height: auto;
+                max-height: 85vh;
+                object-fit: contain;
+                display: block;
+            }
+
+            & #img_lightbox_caption {
+                font-family: var(--font-tech), monospace;
+                font-size: 0.65rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: #555;
+                margin: 0;
+            }
+
+            & #img_lightbox_close {
+                position: fixed;
+                top: 1.2rem;
+                right: 1.2rem;
+                z-index: 3100;
+                background: #000;
+                border: 1px solid #555;
+                color: var(--white);
+                font-size: 1.4rem;
+                line-height: 1;
+                width: 2.2rem;
+                height: 2.2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-family: var(--font-tech), monospace;
+                transition: border-color 120ms ease, color 120ms ease;
+
+                &:hover {
+                    border-color: var(--gold);
+                    color: var(--gold);
+                }
+            }
+        }
+
+        @keyframes pdf_dot_pulse {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scaleY(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleY(1.6);
+            }
+        }    </style>
 </head>
 
 <body>
@@ -707,41 +1150,39 @@
                     <span class="hero_layer">Build things - software, systems, experiences</span>
                 </p>
             </div>
-
-
         </div>
 
         <section id="home_image_gallery" aria-label="Featured Work">
             <div id="gallery_dock">
-                <a class="gallery_image" href="#projects" aria-label="Inner Wilds"
+                <a class="gallery_image" href="#inner-wilds" aria-label="Inner Wilds"
                    data-title="Inner Wilds"
                    data-subtitle="Python • time-loop • ASCII UI"
                    data-tagline="A lone pilot. A system caught in a loop. Get out.">
                     <img src="assets/project_screenshots/inner_wilds.png" alt="Inner Wilds screenshot">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="STACK"
+                <a class="gallery_image" href="#stack" aria-label="STACK"
                    data-title="STACK"
                    data-subtitle="Firebase • JavaScript • Agile"
                    data-tagline="Manage your time like you mean it.">
                     <img src="assets/project_screenshots/stack.png" alt="STACK app screenshot">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="Unicorn API"
+                <a class="gallery_image" href="#unicorn-api" aria-label="Unicorn API"
                    data-title="Unicorn API"
                    data-subtitle="REST API • Express • MongoDB"
                    data-tagline="Full CRUD. Real architecture. Fictional data.">
                     <img src="assets/project_screenshots/unicorn_API.png" alt="Unicorn API screenshot">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="Business Needs Analysis"
+                <a class="gallery_image" href="#business-analysis" aria-label="Business Needs Analysis"
                    data-title="Business|Analysis"
                    data-subtitle="Requirements • ERDs • Agile docs"
                    data-tagline="Translating business needs into technical solutions.">
                     <img src="assets/project_screenshots/business_analysis.png" alt="Business Analysis Cover Page">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="Website Redevelopment Proposal"
+                <a class="gallery_image" href="#website-proposal" aria-label="Website Redevelopment Proposal"
                    data-title="Website|Proposal"
                    data-subtitle="UX research • heuristics • strategy"
                    data-tagline="A full UX audit and redevelopment brief for a real client.">
@@ -749,7 +1190,7 @@
                          alt="Website Redevelopment Proposal Cover Page">
                 </a>
 
-                <a class="gallery_image" href="#projects" aria-label="Heuristic Analysis"
+                <a class="gallery_image" href="#heuristic-analysis" aria-label="Heuristic Analysis"
                    data-title="Heuristic|Analysis"
                    data-subtitle="UX evaluation • comparative study"
                    data-tagline="Measuring interfaces against the principles that make them work.">
@@ -980,14 +1421,473 @@
     </section>
 
     <section id="projects" class="page">
-        <h2>PROJECTS</h2>
+        <nav id="projects_nav">
+            <ul id="projects_nav_list">
+                <li><a href="#inner-wilds" class="projects_nav_link" data-target="inner-wilds">Inner Wilds</a></li>
+                <li><a href="#stack" class="projects_nav_link" data-target="stack">STACK</a></li>
+                <li><a href="#unicorn-api" class="projects_nav_link" data-target="unicorn-api">Unicorn API</a></li>
+                <li><a href="#business-analysis" class="projects_nav_link" data-target="business-analysis">Business
+                    Analysis</a></li>
+                <li><a href="#website-proposal" class="projects_nav_link" data-target="website-proposal">Website
+                    Proposal</a></li>
+                <li><a href="#heuristic-analysis" class="projects_nav_link" data-target="heuristic-analysis">Heuristic
+                    Analysis</a></li>
+            </ul>
+        </nav>
+        <article class="project_entry" id="inner-wilds">
+            <div class="project_layout">
+                <div class="project_media">
+                    <div class="project_hero_image project_hero_clickable"
+                         data-lightbox-img="assets/project_screenshots/inner_wilds.png"
+                         data-lightbox-alt="Inner Wilds"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View full image">
+                        <img src="assets/project_screenshots/inner_wilds.png" alt="Inner Wilds screenshot">
+                        <div class="project_img_hint">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                            <span>View full size</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_content">
+                    <p class="project_label">Python — Solo</p>
+                    <h2 class="project_title">Inner Wilds</h2>
+                    <div class="project_tags">
+                        <span class="project_tag">Python</span>
+                        <span class="project_tag">ASCII UI</span>
+                        <span class="project_tag">Time-loop</span>
+                        <span class="project_tag">Game Design</span>
+                        <span class="project_tag">OOP</span>
+                    </div>
+                    <div class="project_divider"></div>
+                    <dl class="project_star">
+                        <dt>Situation</dt>
+                        <dd>COMP 1510's term project required a text-based Single User Dungeon with a 10×10+ world,
+                            encounters, a final goal, and proper decomposition — all in the Python standard library. The
+                            brief was open-ended enough that the real constraint was taste.
+                        </dd>
+                        <dt>Task</dt>
+                        <dd>Design and build a complete, playable game from scratch: a coherent world, a looping
+                            narrative that actually warranted the loop mechanic, a full-screen ASCII UI with a HUD, and
+                            enough encounter variety to stay interesting. Do it well enough that you'd want to play it
+                            yourself.
+                        </dd>
+                        <dt>Action</dt>
+                        <dd>Structured the entire codebase as a package — maps, encounters, state, visuals, and flavour
+                            text each in their own modules. Designed a time-loop mechanic where per-loop stats reset but
+                            progression flags persist, creating genuine stakes without frustrating resets. Built a
+                            full-screen ASCII renderer compositing a live map, legend, and status panel side by side.
+                            Wrote seven distinct encounter scenarios for the asteroid belt alone, each with its own
+                            ASCII art and timed input, then layered a ship malfunction minigame and a deep-system
+                            stillness challenge on top. Capped it with an interactive ring-alignment puzzle at the
+                            Observatory.
+                        </dd>
+                        <dt>Result</dt>
+                        <dd>A complete, polished game I'm genuinely proud of — real atmosphere, a satisfying loop
+                            structure, and a codebase clean enough that extending it still feels good. Most importantly,
+                            it taught me that a constrained interface is a design problem, not a limitation: every
+                            moment of the UI is intentional.
+                        </dd>
+                    </dl>
+                    <div class="project_links">
+                        <a class="project_link" href="https://github.com/KJAlloway/InnerWilds" target="_blank"
+                           rel="noopener">
+                            <span>GitHub</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M7 17L17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="project_entry" id="stack">
+            <div class="project_layout">
+                <div class="project_media">
+                    <div class="project_hero_image project_hero_clickable"
+                         data-lightbox-img="assets/project_screenshots/stack.png"
+                         data-lightbox-alt="STACK"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View full image">
+                        <img src="assets/project_screenshots/stack.png" alt="STACK app screenshot">
+                        <div class="project_img_hint">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                            <span>View full size</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_content">
+                    <p class="project_label">JavaScript — 3-Person Agile Team</p>
+                    <h2 class="project_title">STACK</h2>
+                    <div class="project_tags">
+                        <span class="project_tag">JavaScript</span>
+                        <span class="project_tag">Firebase</span>
+                        <span class="project_tag">Firestore</span>
+                        <span class="project_tag">Vite</span>
+                        <span class="project_tag">Bootstrap</span>
+                        <span class="project_tag">Agile</span>
+                    </div>
+                    <div class="project_divider"></div>
+                    <dl class="project_star">
+                        <dt>Situation</dt>
+                        <dd>COMP 1800 required a full-stack web app built in a three-person Agile team over several
+                            sprints. We needed to ship something real — user-authenticated, cloud-backed, and actually
+                            useful — not a demo with placeholder data.
+                        </dd>
+                        <dt>Task</dt>
+                        <dd>Design and deliver a time-management tool that let students block out study schedules, add
+                            tasks with due dates and priority levels, and surface which tasks needed attention most
+                            urgently. My responsibilities spanned the frontend architecture, the calendar system, and
+                            the priority scoring logic.
+                        </dd>
+                        <dt>Action</dt>
+                        <dd>Built the entire calendar grid system — a responsive 7-day × 17-hour block scheduler driven
+                            by a clean date/range module with configurable clock offsets for testing. Implemented a base
+                            schedule pattern (recurring weekly blocks) with per-week exclusion overrides, all synced
+                            live via Firestore snapshot listeners. Designed a priority scoring algorithm that combined
+                            task urgency (ratio of time needed vs. available study hours before the deadline) with
+                            user-set importance, dynamically recalculating as the schedule changed. Coordinated the
+                            team's Agile workflow: standups, sprint planning, user stories, and a Kanban board
+                            throughout.
+                        </dd>
+                        <dt>Result</dt>
+                        <dd>A production-deployed app at dtc-13.web.app, used and user-tested by real classmates. The
+                            calendar and priority system both held up under live testing — feedback was consistently
+                            that the urgency indicator actually changed how people sequenced their week.
+                        </dd>
+                    </dl>
+                    <div class="project_links">
+                        <a class="project_link" href="https://github.com/KJAlloway/1800_202530_DTC13" target="_blank"
+                           rel="noopener">
+                            <span>GitHub</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M7 17L17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                        <a class="project_link" href="https://dtc-13.web.app/" target="_blank" rel="noopener">
+                            <span>Live App</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M7 17L17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="project_entry" id="unicorn-api">
+            <div class="project_layout">
+                <div class="project_media">
+                    <div class="project_hero_image project_hero_clickable"
+                         data-lightbox-img="assets/project_screenshots/unicorn_API.png"
+                         data-lightbox-alt="Unicorn API"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View full image">
+                        <img src="assets/project_screenshots/unicorn_API.png" alt="Unicorn API screenshot">
+                        <div class="project_img_hint">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                            <span>View full size</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_content">
+                    <p class="project_label">Node.js — Solo</p>
+                    <h2 class="project_title">Unicorn API</h2>
+                    <div class="project_tags">
+                        <span class="project_tag">Node.js</span>
+                        <span class="project_tag">Express</span>
+                        <span class="project_tag">MongoDB</span>
+                        <span class="project_tag">Mongoose</span>
+                        <span class="project_tag">REST</span>
+                        <span class="project_tag">CRUD</span>
+                    </div>
+                    <div class="project_divider"></div>
+                    <dl class="project_star">
+                        <dt>Situation</dt>
+                        <dd>COMP 1537's final assignment was to build a RESTful API from scratch — both a working
+                            backend and a frontend that consumed it. The dataset was deliberately absurd (unicorns),
+                            which meant the architecture had to carry the weight.
+                        </dd>
+                        <dt>Task</dt>
+                        <dd>Design and implement a full-stack application with a properly structured Express server, a
+                            MongoDB/Mongoose backend, complete CRUD endpoints with error handling and appropriate status
+                            codes, and a frontend dashboard that let users query, filter, sort, create, update, and
+                            delete records.
+                        </dd>
+                        <dt>Action</dt>
+                        <dd>Defined a Mongoose schema with typed fields, defaults, and optional constraints. Built five
+                            RESTful endpoints covering GET (with multi-parameter filtering: name, loves, weight range,
+                            vampire count, vaccination status), POST, GET by name, PUT, and DELETE — each with proper
+                            400/404/500 handling. On the frontend, built a dynamic dashboard in vanilla JS: a sortable,
+                            filterable data table with column visibility toggles, inline edit and delete per row, and a
+                            create form — all communicating with the backend over fetch. Seeded the database with
+                            representative test data and deployed to Render.
+                        </dd>
+                        <dt>Result</dt>
+                        <dd>A clean, well-structured full-stack application that demonstrated I understood the whole
+                            HTTP request/response cycle — not just "make fetch work." The filtering logic in particular
+                            (combining multiple query params into a single Mongoose filter object) required thinking
+                            through the query model carefully rather than patching it incrementally.
+                        </dd>
+                    </dl>
+                    <div class="project_links">
+                        <a class="project_link" href="https://github.com/KJAlloway/UnicornDB_Demo" target="_blank"
+                           rel="noopener">
+                            <span>GitHub</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M7 17L17 7M7 7h10v10"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="project_entry" id="business-analysis">
+            <div class="project_layout">
+                <div class="project_media">
+                    <div class="project_hero_image project_hero_pdf"
+                         data-pdf="assets/pdfs/business_analysis.pdf"
+                         role="button"
+                         tabindex="0"
+                         aria-label="Open Business Analysis document">
+                        <img src="assets/project_screenshots/business_analysis.png" alt="Business Analysis cover page">
+                        <div class="project_pdf_hint">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            <span>Read document</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_content">
+                    <p class="project_label">Documentation — Team</p>
+                    <h2 class="project_title">Business Analysis</h2>
+                    <div class="project_tags">
+                        <span class="project_tag">Requirements</span>
+                        <span class="project_tag">ERDs</span>
+                        <span class="project_tag">Agile Docs</span>
+                        <span class="project_tag">Systems Design</span>
+                    </div>
+                    <div class="project_divider"></div>
+                    <dl class="project_star">
+                        <dt>Situation</dt>
+                        <dd>COMP 1712 at BCIT required a five-person team to produce a complete business analysis
+                            document for a mock client scenario: Target Enterprises, a South African distribution
+                            company with paper-based processes, duplicate customer records, and no scalable order
+                            management system. The deliverable spanned the full systems analysis lifecycle from initial
+                            request through architecture decisions.
+                        </dd>
+                        <dt>Task</dt>
+                        <dd>Contribute to and co-own a formal team document covering system request, stakeholder
+                            analysis, feasibility study, requirements elicitation, use case diagrams, data flow
+                            diagrams, entity-relationship diagrams, and a final system architecture decision matrix —
+                            all produced iteratively across eight lab sessions with a defined team working agreement.
+                        </dd>
+                        <dt>Action</dt>
+                        <dd>Led the benefits and cost analysis, translating ambiguous business needs into quantified
+                            feasibility arguments. Contributed to the requirements refresh and categorisation, the ERD
+                            design, and the decision matrix comparing architecture options. Helped establish and enforce
+                            the team's working standards — communication norms, conflict resolution process, and task
+                            ownership — which kept a five-person group aligned across weeks of parallel deliverables.
+                            Participated in retrospectives after each major phase to surface what wasn't working and
+                            adjust.
+                        </dd>
+                        <dt>Result</dt>
+                        <dd>A polished, professional-grade technical document that demonstrated the full business
+                            analysis process end to end — from understanding a client's operational pain points to
+                            proposing a defensible system architecture. The experience made clear that good software
+                            starts well before any code is written, and that translating messy business reality into
+                            clean technical requirements is a discipline in itself.
+                        </dd>
+                    </dl>
+                    <div class="project_links">
+                        <a class="project_link" href="assets/pdfs/business_analysis.pdf" download>
+                            <span>Download PDF</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/>
+                                <path d="M4 20h16"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="project_entry" id="website-proposal">
+            <div class="project_layout">
+                <div class="project_media">
+                    <div class="project_hero_image project_hero_pdf"
+                         data-pdf="assets/pdfs/website-proposal.pdf"
+                         role="button"
+                         tabindex="0"
+                         aria-label="Open Website Proposal document">
+                        <img src="assets/project_screenshots/website_redev_proposal.png"
+                             alt="Website Redevelopment Proposal">
+                        <div class="project_pdf_hint">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            <span>Read document</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_content">
+                    <p class="project_label">UX Research — Team</p>
+                    <h2 class="project_title">Website Proposal</h2>
+                    <div class="project_tags">
+                        <span class="project_tag">UX Research</span>
+                        <span class="project_tag">Heuristics</span>
+                        <span class="project_tag">Strategy</span>
+                        <span class="project_tag">Client Work</span>
+                    </div>
+                    <div class="project_divider"></div>
+                    <dl class="project_star">
+                        <dt>Situation</dt>
+                        <dd>Handmade Barber Studio, a downtown Vancouver barbershop, had a functional booking website
+                            that wasn't performing as a business asset. In a competitive market where clients evaluate
+                            service providers before ever walking in, the site lacked portfolio integration, had a
+                            friction-heavy booking flow, contained broken links, and was poorly optimised for local
+                            search — all documented through a structured UX and technical audit conducted for BCIT's
+                            business communications course.
+                        </dd>
+                        <dt>Task</dt>
+                        <dd>As one of four team members, contribute to a research-backed redevelopment proposal that
+                            identified the site's highest-impact problems, explained their business implications with
+                            supporting evidence, and presented practical, prioritised solutions — written for both a
+                            technical and non-technical audience.
+                        </dd>
+                        <dt>Action</dt>
+                        <dd>Applied Nielsen's usability heuristics and web credibility research to evaluate the existing
+                            site systematically. Analysed the booking interface and found that clients were selecting
+                            barbers by name alone — no photos, no bios, no portfolio — creating uncertainty that pushed
+                            users to Instagram to evaluate quality before booking. Mapped the full booking flow to
+                            identify drop-off points. Benchmarked against competitor barbershop sites to establish what
+                            the market standard looked like. Structured findings into four actionable areas: brand
+                            visibility and credibility, booking flow clarity, technical reliability, and search
+                            discoverability — each with current-state evidence, business impact reasoning, and concrete
+                            recommendations.
+                        </dd>
+                        <dt>Result</dt>
+                        <dd>A structured, professionally written proposal delivered to a real client. The process
+                            developed a transferable skill set: the ability to evaluate a digital product critically,
+                            build a defensible case for change using evidence rather than opinion, and communicate
+                            technical recommendations to a non-technical decision-maker. The heuristic evaluation
+                            framework used here directly informed the comparative analysis produced alongside it.
+                        </dd>
+                    </dl>
+                    <div class="project_links">
+                        <a class="project_link" href="assets/pdfs/website_redev_proposal.pdf" download>
+                            <span>Download PDF</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/>
+                                <path d="M4 20h16"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="project_entry" id="heuristic-analysis">
+            <div class="project_layout">
+                <div class="project_media">
+                    <div class="project_hero_image project_hero_pdf"
+                         data-pdf="assets/pdfs/heuristic_analysis.pdf"
+                         role="button"
+                         tabindex="0"
+                         aria-label="Open Heuristic Analysis document">
+                        <img src="assets/project_screenshots/comparitive_hueristics.png"
+                             alt="Heuristic Analysis document">
+                        <div class="project_pdf_hint">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            <span>Read document</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project_content">
+                    <p class="project_label">UX Research — 3-Person Team</p>
+                    <h2 class="project_title">Heuristic Analysis</h2>
+                    <div class="project_tags">
+                        <span class="project_tag">UX Evaluation</span>
+                        <span class="project_tag">Comparative Study</span>
+                        <span class="project_tag">Nielsen Heuristics</span>
+                        <span class="project_tag">Technical Writing</span>
+                    </div>
+                    <div class="project_divider"></div>
+                    <dl class="project_star">
+                        <dt>Situation</dt>
+                        <dd>As part of BCIT's business communications curriculum, our STACK development team was
+                            required to formally evaluate our own application against an established competitor using
+                            Nielsen's usability heuristics. The goal was to produce a structured comparative report that
+                            demonstrated we could assess design critically — not just build.
+                        </dd>
+                        <dt>Task</dt>
+                        <dd>As one of three authors, contribute to a written heuristic analysis comparing STACK and
+                            Google Calendar across three of Nielsen's ten heuristics: Aesthetic and Minimalist Design,
+                            Visibility of System Status, and Recognition Rather than Recall. Each section required
+                            screenshots as evidence, a clear explanation of the heuristic, analysis of both
+                            applications, and prioritised improvement recommendations.
+                        </dd>
+                        <dt>Action</dt>
+                        <dd>Applied each heuristic methodically to both products, using annotated screenshots to ground
+                            observations in specific interface moments rather than general impressions. For Google
+                            Calendar, identified that an ambiguous sort icon broke aesthetic conventions without
+                            offering a recognisable affordance, and that a decorative illustration added visual noise
+                            without information value. For STACK, was honest about where our own app fell short —
+                            inconsistent feedback patterns, interaction elements that required recall rather than
+                            recognition, and visual elements that added complexity without clarity. Framed every
+                            criticism as a prioritised recommendation rather than a complaint.
+                        </dd>
+                        <dt>Result</dt>
+                        <dd>A report that required holding our own work to the same standard as an established product —
+                            and being willing to find it wanting. The discipline of applying a formal framework to
+                            something you built yourself is genuinely difficult; it requires separating intent from
+                            outcome. The exercise produced concrete improvements that were folded back into STACK's
+                            development, and it built the habit of evaluating interfaces by their effect on users rather
+                            than their technical implementation.
+                        </dd>
+                    </dl>
+                    <div class="project_links">
+                        <a class="project_link" href="assets/pdfs/comparative_heuristics.pdf" download>
+                            <span>Download PDF</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/>
+                                <path d="M4 20h16"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
     </section>
 
     <section id="contact" class="page">
         <p class="contact_label">Contact</p>
         <h2 class="contact_heading">Let's talk.</h2>
         <p class="contact_sub">Looking for a <strong>summer 2026 internship</strong>. If you're building something
-            interesting, and have room for someone hungry to contribute: I'd love to hear about it. <br> Also open to project
+            interesting, and have room for someone hungry to contribute: I'd love to hear about it. <br> Also open to
+            project
             collabs, feedback, or just saying hi.</p>
         <div class="contact_divider"></div>
 
@@ -1060,6 +1960,8 @@
 
 <script>
 
+    const SITE_BASE_URL = window.location.origin;
+
     function roll_set_text(roll_element, next_text) {
         const layers = roll_element.querySelectorAll(".hero_layer");
         const current_layer = layers[layers.length - 1];
@@ -1087,35 +1989,85 @@
         }, duration_ms + 30);
     }
 
+    const PROJECT_IDS = [
+        "inner-wilds",
+        "stack",
+        "unicorn-api",
+        "business-analysis",
+        "website-proposal",
+        "heuristic-analysis",
+    ];
+
     function set_active_page() {
-        const page = location.hash ? location.hash.slice(1) : "home";
+        const hash = location.hash ? location.hash.slice(1) : "home";
 
-        const pages = document.querySelectorAll(".page");
-        pages.forEach(page => page.classList.remove("active"));
+        // Check if this hash is a project deep-link
+        const is_project = PROJECT_IDS.includes(hash);
+        const page = is_project ? "projects" : hash;
 
-        const nav_links = document.querySelectorAll("#nav_bar a");
-        nav_links.forEach(link => link.classList.remove("active"));
+        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+        document.querySelectorAll("#nav_bar a").forEach(a => a.classList.remove("active"));
 
-        const active_page = document.getElementById(page);
-
-        if (active_page) {
-            active_page.classList.add("active");
-        } else {
-            document.getElementById("home").classList.add("active");
-        }
+        const active_page = document.getElementById(page) || document.getElementById("home");
+        active_page.classList.add("active");
 
         const active_link =
             document.querySelector(`#nav_bar a[href="#${page}"]`) ||
             document.querySelector(`#nav_bar a[href="#home"]`);
+        if (active_link) active_link.classList.add("active");
 
-        if (active_link) {
-            active_link.classList.add("active");
-        }
         if (page !== "home") {
             home_gallery.reset_home_state();
         }
-        window.scrollTo(0, 0);
+
+        // If it's a project deep-link, scroll to that project after a brief paint delay
+        if (is_project) {
+            window.setTimeout(() => {
+                const target = document.getElementById(hash);
+                if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
+            }, 50);
+        } else {
+            window.scrollTo(0, 0);
+        }
     }
+
+    function initialize_projects_nav() {
+        const nav_links = document.querySelectorAll(".projects_nav_link");
+        const project_entries = document.querySelectorAll(".project_entry");
+
+        if (!nav_links.length || !project_entries.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    nav_links.forEach(link => link.classList.remove("active"));
+                    const active = document.querySelector(
+                        `.projects_nav_link[data-target="${entry.target.id}"]`
+                    );
+                    if (active) active.classList.add("active");
+                }
+            });
+        }, {
+            rootMargin: "-30% 0px -60% 0px",
+            threshold: 0
+        });
+
+        project_entries.forEach(entry => observer.observe(entry));
+
+        nav_links.forEach(link => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const target_id = link.dataset.target;
+                const target = document.getElementById(target_id);
+                if (target) {
+                    target.scrollIntoView({behavior: "smooth", block: "start"});
+                    history.pushState(null, "", `#${target_id}`);
+                }
+            });
+        });
+    }
+
+    initialize_projects_nav();
 
     function initialize_home_gallery() {
         const gallery_dock_element = document.getElementById("gallery_dock");
@@ -1436,6 +2388,114 @@
 
     }
 
+    function initialize_pdf_lightbox() {
+        const lightbox = document.getElementById("pdf_lightbox");
+        const frame = document.getElementById("pdf_lightbox_frame");
+        const close_btn = document.getElementById("pdf_lightbox_close");
+        const loading_msg = document.getElementById("pdf_lightbox_loading");
+
+        if (!lightbox || !frame || !close_btn) return;
+
+        const SITE_BASE = window.location.origin;
+
+        function open_pdf(relative_path) {
+            const full_url = `${SITE_BASE}/${relative_path}`;
+            const is_local = window.location.hostname === "localhost"
+                || window.location.hostname === "127.0.0.1";
+            const viewer_url = is_local
+                ? full_url
+                : `https://docs.google.com/viewer?url=${encodeURIComponent(full_url)}&embedded=true`;
+
+            frame.src = viewer_url;
+            lightbox.classList.add("open");
+            document.body.style.overflow = "hidden";
+            if (loading_msg) loading_msg.style.display = "flex";
+            frame.onload = () => {
+                if (loading_msg) loading_msg.style.display = "none";
+            };
+        }
+
+        function close_pdf() {
+            lightbox.classList.remove("open");
+            frame.src = "";
+            document.body.style.overflow = "";
+            if (loading_msg) loading_msg.style.display = "none";
+        }
+
+        close_btn.addEventListener("click", close_pdf);
+
+        lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) close_pdf();
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") close_pdf();
+        });
+
+        document.querySelectorAll("[data-pdf]").forEach(trigger => {
+            trigger.addEventListener("click", (e) => {
+                e.preventDefault();
+                open_pdf(trigger.dataset.pdf);
+            });
+            trigger.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    open_pdf(trigger.dataset.pdf);
+                }
+            });
+        });
+    }
+
+    function initialize_img_lightbox() {
+        const lightbox = document.getElementById("img_lightbox");
+        const img = document.getElementById("img_lightbox_img");
+        const caption = document.getElementById("img_lightbox_caption");
+        const close_btn = document.getElementById("img_lightbox_close");
+
+        if (!lightbox || !img || !close_btn) return;
+
+        function open_img(src, alt) {
+            img.src = src;
+            img.alt = alt || "";
+            if (caption) caption.textContent = alt || "";
+            lightbox.classList.add("open");
+            document.body.style.overflow = "hidden";
+        }
+
+        function close_img() {
+            lightbox.classList.remove("open");
+            img.src = "";
+            document.body.style.overflow = "";
+        }
+
+        close_btn.addEventListener("click", close_img);
+
+        lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) close_img();
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") close_img();
+        });
+
+        document.querySelectorAll("[data-lightbox-img]").forEach(trigger => {
+            trigger.addEventListener("click", (e) => {
+                e.preventDefault();
+                open_img(trigger.dataset.lightboxImg, trigger.dataset.lightboxAlt);
+            });
+            trigger.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    open_img(trigger.dataset.lightboxImg, trigger.dataset.lightboxAlt);
+                }
+            });
+        });
+    }
+
+    initialize_img_lightbox();
+    
+    initialize_pdf_lightbox();
+
     const home_gallery = initialize_home_gallery();
 
     window.addEventListener("hashchange", set_active_page);
@@ -1444,15 +2504,19 @@
 
     document.getElementById("contact_form").addEventListener("submit", (e) => {
         e.preventDefault();
-        const data = new FormData(e.target);
+        const form = e.target;
+
+        const formData = new FormData(form);
+        const searchParams = new URLSearchParams();
+        formData.forEach((value, key) => searchParams.append(key, value.toString()));
 
         fetch("/", {
             method: "POST",
             headers: {"Content-Type": "application/x-www-form-urlencoded"},
-            body: new URLSearchParams(data).toString(),
+            body: searchParams.toString(),
         })
             .then(() => {
-                e.target.reset();
+                form.reset();
                 document.getElementById("contact_success").style.display = "block";
             })
             .catch(() => {
@@ -1477,6 +2541,27 @@
     <input name="name"><input name="email">
     <input name="subject"><textarea name="message"></textarea>
 </form>
+
+<div id="pdf_lightbox" aria-modal="true" role="dialog" aria-label="Document viewer">
+    <button id="pdf_lightbox_close" aria-label="Close document">&times;</button>
+    <div id="pdf_lightbox_inner">
+        <div id="pdf_lightbox_loading">
+            <span>Loading document</span>
+            <div id="pdf_loading_dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <iframe id="pdf_lightbox_frame" title="Document viewer"></iframe>
+    </div>
+</div>
+
+<div id="img_lightbox" aria-modal="true" role="dialog" aria-label="Image viewer">
+    <button id="img_lightbox_close" aria-label="Close image">&times;</button>
+    <div id="img_lightbox_inner">
+        <img id="img_lightbox_img" src="" alt="">
+        <p id="img_lightbox_caption"></p>
+    </div>
+</div>
 
 </body>
 
