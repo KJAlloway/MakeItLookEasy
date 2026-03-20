@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-            href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Jockey+One&
+            family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
             rel="stylesheet">
     <style>
         :root {
@@ -542,7 +543,7 @@
             }
 
             & .resume_section {
-                margin-bottom: 2.5rem;
+                margin-bottom: 4rem;
                 border-top: 1px solid #222;
                 padding-top: 1.5rem;
             }
@@ -574,7 +575,7 @@
 
                 & .entry_date {
                     font-size: 0.75rem;
-                    color: #555;
+                    color: #777;
                     margin-bottom: 0.8rem;
                 }
 
@@ -599,6 +600,11 @@
                         }
                     }
                 }
+            }
+
+            & .entry_subtitle {
+                color: #888;
+                font-weight: 400;
             }
 
             & .resume_skills_grid {
@@ -626,80 +632,81 @@
             }
         }
 
+        /* Shared fixed side-nav styles (projects + resume) */
+        .page_side_nav {
+            position: fixed;
+            left: max(1rem, calc((100vw - 1100px) / 2 - 160px));
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+
+            @media (max-width: 1380px) {
+                display: none;
+            }
+
+            & ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+
+            & .side_nav_link {
+                display: inline-block;
+                font-family: var(--font-tech), monospace;
+                font-size: 0.65rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #444;
+                text-decoration: none;
+                padding: 0.3rem 0;
+                position: relative;
+                transition: color 120ms ease;
+
+                &::before {
+                    content: "[";
+                    position: absolute;
+                    left: -1.2ch;
+                    color: var(--gold);
+                    opacity: 0;
+                    transition: opacity 120ms ease;
+                }
+
+                &::after {
+                    content: "]";
+                    position: absolute;
+                    right: -1.2ch;
+                    color: var(--gold);
+                    opacity: 0;
+                    transition: opacity 120ms ease;
+                }
+
+                &:hover,
+                &.active {
+                    color: var(--white);
+                }
+
+                &:hover::before,
+                &:hover::after,
+                &.active::before,
+                &.active::after {
+                    opacity: 1;
+                }
+
+                &.active {
+                    color: var(--gold);
+                }
+            }
+        }
+
         #projects {
             max-width: 1100px;
             margin: 0 auto;
             padding-top: 60px;
-
-            & #projects_nav {
-                position: fixed;
-                left: max(1rem, calc((100vw - 1100px) / 2 - 160px));
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 100;
-                display: flex;
-                flex-direction: column;
-
-                @media (max-width: 1380px) {
-                    display: none;
-                }
-
-                & ul {
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.2rem;
-                }
-
-                & .projects_nav_link {
-                    display: inline-block;
-                    font-family: var(--font-tech), monospace;
-                    font-size: 0.65rem;
-                    letter-spacing: 0.12em;
-                    text-transform: uppercase;
-                    color: #444;
-                    text-decoration: none;
-                    padding: 0.3rem 0;
-                    position: relative;
-                    transition: color 120ms ease;
-
-                    &::before {
-                        content: "[";
-                        position: absolute;
-                        left: -1.2ch;
-                        color: var(--gold);
-                        opacity: 0;
-                        transition: opacity 120ms ease;
-                    }
-
-                    &::after {
-                        content: "]";
-                        position: absolute;
-                        right: -1.2ch;
-                        color: var(--gold);
-                        opacity: 0;
-                        transition: opacity 120ms ease;
-                    }
-
-                    &:hover,
-                    &.active {
-                        color: var(--white);
-                    }
-
-                    &:hover::before,
-                    &:hover::after,
-                    &.active::before,
-                    &.active::after {
-                        opacity: 1;
-                    }
-
-                    &.active {
-                        color: var(--gold);
-                    }
-                }
-            }
 
             & .project_entry {
                 padding: 80px 0;
@@ -1051,6 +1058,10 @@
             }
         }
 
+        #drawer_divider {
+            display: none;
+        }
+
         footer {
             display: flex;
             flex-direction: column;
@@ -1113,13 +1124,159 @@
                 height: 90vh;
                 background: #111;
                 border: 1px solid #333;
+                display: flex;
+                flex-direction: column;
             }
 
-            & #pdf_lightbox_frame {
-                width: 100%;
+            & #pdf_toolbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.5rem 0.75rem;
+                border-bottom: 1px solid #222;
+                background: #0a0a0a;
+                flex-shrink: 0;
+                font-family: var(--font-tech), monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                color: #888;
+                position: relative;
+
+                & #pdf_toolbar_left,
+                & #pdf_toolbar_center,
+                & #pdf_toolbar_right {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                }
+
+                & #pdf_toolbar_center {
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    pointer-events: none;
+                }
+
+                & #pdf_page_display {
+                    font-family: var(--font-tech), monospace;
+                    font-size: 0.7rem;
+                    letter-spacing: 0.12em;
+                    color: #666;
+                    white-space: nowrap;
+                    min-width: 5rem;
+                    text-align: center;
+                }
+
+                & button {
+                    background: none;
+                    border: 1px solid #333;
+                    color: var(--white);
+                    font-family: var(--font-tech), monospace;
+                    font-size: 0.7rem;
+                    letter-spacing: 0.1em;
+                    padding: 0.2rem 0.5rem;
+                    cursor: pointer;
+                    transition: border-color 120ms ease, color 120ms ease;
+                    line-height: 1;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.35rem;
+
+                    &:hover {
+                        border-color: var(--gold);
+                        color: var(--gold);
+                    }
+
+                    &.active {
+                        border-color: var(--gold);
+                        color: var(--gold);
+                    }
+                }
+
+                & #pdf_zoom_level {
+                    min-width: 3rem;
+                    text-align: center;
+                }
+            }
+
+            & #pdf_body {
+                flex: 1;
+                display: flex;
+                overflow: hidden;
+            }
+
+            & #pdf_toc {
+                width: 0;
                 height: 100%;
-                border: none;
-                display: block;
+                flex-shrink: 0;
+                overflow: hidden;
+                background: #0d0d0d;
+                border-right: 0 solid #222;
+                transition: width 240ms cubic-bezier(.2, .9, .2, 1),
+                border-right-width 240ms cubic-bezier(.2, .9, .2, 1);
+                display: flex;
+                flex-direction: column;
+                min-height: 0;
+
+                &.open {
+                    width: 220px;
+                    border-right-width: 1px;
+                }
+            }
+
+            & #pdf_toc_inner {
+                width: 220px;
+                height: 100%;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 1rem 0;
+
+                & a {
+                    display: block;
+                    font-family: var(--font-tech), monospace;
+                    font-size: 0.65rem;
+                    letter-spacing: 0.08em;
+                    line-height: 1.5;
+                    color: #666;
+                    text-decoration: none;
+                    padding: 0.3rem 1rem;
+                    transition: color 120ms ease, background-color 120ms ease;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    &:hover {
+                        color: var(--white);
+                        background-color: #1a1a1a;
+                    }
+
+                    &.toc_page {
+                        color: #444;
+                        font-size: 0.6rem;
+                    }
+
+                    &.toc_page:hover {
+                        color: #888;
+                    }
+                }
+            }
+
+            & #pdf_canvas_container {
+                flex: 1;
+                overflow-y: auto;
+                overflow-x: auto;
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                background: #1a1a1a;
+
+                & canvas {
+                    display: block;
+                    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+                    max-width: 100%;
+                }
             }
 
             & #pdf_lightbox_close {
@@ -1266,6 +1423,10 @@
             }
         }
 
+        .visually_hidden {
+            display: none;
+        }
+
     </style>
 </head>
 
@@ -1296,7 +1457,7 @@
         <li><a href="#projects">PROJECTS</a></li>
         <li><a href="#contact">CONTACT</a></li>
     </ul>
-    <div class="drawer_divider" id="drawer_divider" style="display:none;"></div>
+    <div class="drawer_divider" id="drawer_divider"></div>
     <ul id="drawer_sections"></ul>
 </aside>
 
@@ -1372,7 +1533,7 @@
                    data-title="Heuristic|Analysis"
                    data-subtitle="UX evaluation • comparative study"
                    data-tagline="Measuring interfaces against the principles that make them work.">
-                    <img src="assets/project_screenshots/comparitive_hueristics.png"
+                    <img src="assets/project_screenshots/comparative_heuristics.png"
                          alt="Heuristic Analysis Cover Page">
                 </a>
 
@@ -1457,7 +1618,7 @@
         <div class="resume_section" id="resume-projects">
             <p class="resume_section_title">Projects</p>
             <div class="resume_entry">
-                <p class="entry_title">Agile Team Web Application <span style="color:#555; font-weight:400;">— CST Projects</span>
+                <p class="entry_title">Agile Team Web Application <span class="entry_subtitle">— CST Projects</span>
                 </p>
                 <p class="entry_meta">3-person Agile development team</p>
                 <ul>
@@ -1476,7 +1637,7 @@
                 </ul>
             </div>
             <div class="resume_entry">
-                <p class="entry_title">UX/UI Comparative Analysis <span style="color:#555; font-weight:400;">— CST Business Communications</span>
+                <p class="entry_title">UX/UI Comparative Analysis <span class="entry_subtitle">— CST Business Communications</span>
                 </p>
                 <p class="entry_meta">3-person research and writing team</p>
                 <ul>
@@ -1495,7 +1656,7 @@
                 </ul>
             </div>
             <div class="resume_entry">
-                <p class="entry_title">Python Text-Based Game <span style="color:#555; font-weight:400;">— CST Term Project</span>
+                <p class="entry_title">Python Text-Based Game <span class="entry_subtitle">— CST Term Project</span>
                 </p>
                 <ul>
                     <li>Designed and developed a modular Python game emphasizing clean structure, maintainability, and
@@ -1514,7 +1675,7 @@
             </div>
             <div class="resume_entry">
                 <p class="entry_title">Business Analysis & Systems Documentation <span
-                        style="color:#555; font-weight:400;">— CST Business Analysis</span></p>
+                        class="entry_subtitle">— CST Business Analysis</span></p>
                 <ul>
                     <li>Collaborated in groups to analyze business needs and translate requirements into technical
                         solutions.
@@ -1563,7 +1724,7 @@
         <div class="resume_section" id="resume-experience">
             <p class="resume_section_title">Operational & Leadership Experience</p>
             <div class="resume_entry">
-                <p class="entry_title">JOEY Bentall One <span style="color:#555; font-weight:400;">— Bartender</span>
+                <p class="entry_title">JOEY Bentall One <span class="entry_subtitle">— Bartender</span>
                 </p>
                 <p class="entry_date">Vancouver, BC | November 2024 – Present</p>
                 <ul>
@@ -1575,7 +1736,8 @@
                 </ul>
             </div>
             <div class="resume_entry">
-                <p class="entry_title">Cactus Club Café <span style="color:#555; font-weight:400;">— Progressive Leadership Roles</span>
+                <p class="entry_title">Cactus Club Café <span
+                        class="entry_subtitle">— Progressive Leadership Roles</span>
                 </p>
                 <p class="entry_date">2016 – 2024</p>
                 <ul>
@@ -1588,27 +1750,42 @@
                 </ul>
             </div>
         </div>
-
         <div class="resume_section" id="resume-certs">
             <p class="resume_section_title">Certifications</p>
             <div class="resume_entry">
                 <p class="entry_title">Red Seal Certification</p>
                 <p class="entry_meta">SAIT / VCC</p>
+                <br>
+                <br>
             </div>
         </div>
     </section>
 
+    <nav id="resume_nav" class="page_side_nav" aria-label="Resume sections" style="display:none">
+        <ul>
+            <li><a href="#resume-education" class="side_nav_link" data-target="resume-education">Education</a></li>
+            <li><a href="#resume-projects" class="side_nav_link" data-target="resume-projects">Projects</a></li>
+            <li><a href="#resume-skills" class="side_nav_link" data-target="resume-skills">Technical Skills</a></li>
+            <li><a href="#resume-experience" class="side_nav_link" data-target="resume-experience">Experience</a></li>
+            <li><a href="#resume-certs" class="side_nav_link" data-target="resume-certs">Certifications</a></li>
+        </ul>
+    </nav>
+
     <section id="projects" class="page">
-        <nav id="projects_nav">
+        <nav id="projects_nav" class="page_side_nav" aria-label="Projects">
             <ul id="projects_nav_list">
-                <li><a href="#inner-wilds" class="projects_nav_link" data-target="inner-wilds">Inner Wilds</a></li>
-                <li><a href="#stack" class="projects_nav_link" data-target="stack">STACK</a></li>
-                <li><a href="#unicorn-api" class="projects_nav_link" data-target="unicorn-api">Unicorn API</a></li>
-                <li><a href="#business-analysis" class="projects_nav_link" data-target="business-analysis">Business
+                <li><a href="#inner-wilds" class="side_nav_link projects_nav_link" data-target="inner-wilds">Inner
+                    Wilds</a></li>
+                <li><a href="#stack" class="side_nav_link projects_nav_link" data-target="stack">STACK</a></li>
+                <li><a href="#unicorn-api" class="side_nav_link projects_nav_link" data-target="unicorn-api">Unicorn
+                    API</a></li>
+                <li><a href="#business-analysis" class="side_nav_link projects_nav_link"
+                       data-target="business-analysis">Business
                     Analysis</a></li>
-                <li><a href="#website-proposal" class="projects_nav_link" data-target="website-proposal">Website
+                <li><a href="#website-proposal" class="side_nav_link projects_nav_link" data-target="website-proposal">Website
                     Proposal</a></li>
-                <li><a href="#heuristic-analysis" class="projects_nav_link" data-target="heuristic-analysis">Heuristic
+                <li><a href="#heuristic-analysis" class="side_nav_link projects_nav_link"
+                       data-target="heuristic-analysis">Heuristic
                     Analysis</a></li>
             </ul>
         </nav>
@@ -1842,7 +2019,7 @@
             <div class="project_layout">
                 <div class="project_media">
                     <div class="project_hero_image project_hero_pdf"
-                         data-pdf="assets/pdfs/business_analysis.pdf"
+                         data-pdf="assets/project_pdfs/business_analysis.pdf"
                          role="button"
                          tabindex="0"
                          aria-label="Open Business Analysis document">
@@ -1899,7 +2076,7 @@
                         </dd>
                     </dl>
                     <div class="project_links">
-                        <a class="project_link" href="assets/pdfs/business_analysis.pdf" download>
+                        <a class="project_link" href="assets/project_pdfs/business_analysis.pdf" download>
                             <span>Download PDF</span>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="2">
@@ -1916,7 +2093,7 @@
             <div class="project_layout">
                 <div class="project_media">
                     <div class="project_hero_image project_hero_pdf"
-                         data-pdf="assets/pdfs/website-proposal.pdf"
+                         data-pdf="assets/project_pdfs/website_redev_proposal.pdf"
                          role="button"
                          tabindex="0"
                          aria-label="Open Website Proposal document">
@@ -1977,7 +2154,7 @@
                         </dd>
                     </dl>
                     <div class="project_links">
-                        <a class="project_link" href="assets/pdfs/website_redev_proposal.pdf" download>
+                        <a class="project_link" href="assets/project_pdfs/website_redev_proposal.pdf" download>
                             <span>Download PDF</span>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="2">
@@ -1994,11 +2171,11 @@
             <div class="project_layout">
                 <div class="project_media">
                     <div class="project_hero_image project_hero_pdf"
-                         data-pdf="assets/pdfs/heuristic_analysis.pdf"
+                         data-pdf="assets/project_pdfs/comparative_heuristics.pdf"
                          role="button"
                          tabindex="0"
                          aria-label="Open Heuristic Analysis document">
-                        <img src="assets/project_screenshots/comparitive_hueristics.png"
+                        <img src="assets/project_screenshots/comparative_heuristics.png"
                              alt="Heuristic Analysis document">
                         <div class="project_pdf_hint">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -2054,7 +2231,7 @@
                         </dd>
                     </dl>
                     <div class="project_links">
-                        <a class="project_link" href="assets/pdfs/comparative_heuristics.pdf" download>
+                        <a class="project_link" href="assets/project_pdfs/comparative_heuristics.pdf" download>
                             <span>Download PDF</span>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="2">
@@ -2084,7 +2261,7 @@
               data-netlify="true"
               netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="contact">
-            <p style="display:none;"><input name="bot-field"></p>
+            <p class="visually_hidden"><input name="bot-field"></p>
 
             <div class="contact_row">
                 <div class="contact_field">
@@ -2163,7 +2340,34 @@
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <iframe id="pdf_lightbox_frame" title="Document viewer"></iframe>
+        <div id="pdf_toolbar">
+            <div id="pdf_toolbar_left">
+                <button id="pdf_toc_toggle" aria-label="Toggle table of contents" aria-expanded="false">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="12" x2="15" y2="12"/>
+                        <line x1="3" y1="18" x2="18" y2="18"/>
+                    </svg>
+                    Contents
+                </button>
+            </div>
+            <div id="pdf_toolbar_center">
+                <span id="pdf_page_display">&#x2014;&nbsp;/&nbsp;&#x2014;</span>
+            </div>
+            <div id="pdf_toolbar_right">
+                <button id="pdf_zoom_out" aria-label="Zoom out">&#x2212;</button>
+                <span id="pdf_zoom_level">100%</span>
+                <button id="pdf_zoom_in" aria-label="Zoom in">+</button>
+                <button id="pdf_zoom_fit" aria-label="Fit to width">Fit</button>
+            </div>
+        </div>
+        <div id="pdf_body">
+            <div id="pdf_toc" aria-label="Table of contents">
+                <div id="pdf_toc_inner"></div>
+            </div>
+            <div id="pdf_canvas_container"></div>
+        </div>
     </div>
 </div>
 
@@ -2175,8 +2379,7 @@
     </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script>
+<script type="module">
 
     const SITE_BASE_URL = window.location.origin;
 
@@ -2334,6 +2537,10 @@
             window.scrollTo(0, 0);
         }
 
+        // Show resume_nav only on the resume page
+        const resume_nav = document.getElementById("resume_nav");
+        if (resume_nav) resume_nav.style.display = (page === "resume") ? "" : "none";
+
         update_drawer_sections(page);
     }
 
@@ -2341,6 +2548,13 @@
         document.getElementById("nav_chevron").addEventListener("click", (e) => {
             e.stopPropagation();
             toggle_drawer();
+        });
+
+        // Auto-close drawer when viewport grows past the breakpoint
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 1380 && document.body.classList.contains("drawer_open")) {
+                close_drawer();
+            }
         });
     }
 
@@ -2386,6 +2600,49 @@
     }
 
     initialize_projects_nav();
+
+    function initialize_resume_nav() {
+        const nav_links = document.querySelectorAll("#resume_nav .side_nav_link");
+        const resume_sections = [
+            "resume-education", "resume-projects", "resume-skills",
+            "resume-experience", "resume-certs"
+        ].map(id => document.getElementById(id)).filter(Boolean);
+
+        if (!nav_links.length || !resume_sections.length) return;
+
+        if (nav_links.length) nav_links[0].classList.add("active");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    nav_links.forEach(link => link.classList.remove("active"));
+                    const active = document.querySelector(
+                        `#resume_nav .side_nav_link[data-target="${entry.target.id}"]`
+                    );
+                    if (active) active.classList.add("active");
+                }
+            });
+        }, {
+            rootMargin: "-30% 0px -60% 0px",
+            threshold: 0
+        });
+
+        resume_sections.forEach(el => observer.observe(el));
+
+        nav_links.forEach(link => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const target_id = link.dataset.target;
+                const target = document.getElementById(target_id);
+                if (target) {
+                    target.scrollIntoView({behavior: "smooth", block: "start"});
+                    history.pushState(null, "", `#${target_id}`);
+                }
+            });
+        });
+    }
+
+    initialize_resume_nav();
 
     function initialize_home_gallery() {
         const gallery_dock_element = document.getElementById("gallery_dock");
@@ -2709,44 +2966,229 @@
 
     }
 
-    function initialize_pdf_lightbox() {
+    async function initialize_pdf_lightbox() {
         const lightbox = document.getElementById("pdf_lightbox");
-        const frame = document.getElementById("pdf_lightbox_frame");
         const close_btn = document.getElementById("pdf_lightbox_close");
         const loading_msg = document.getElementById("pdf_lightbox_loading");
+        const canvas_container = document.getElementById("pdf_canvas_container");
+        const zoom_in_btn = document.getElementById("pdf_zoom_in");
+        const zoom_out_btn = document.getElementById("pdf_zoom_out");
+        const zoom_fit_btn = document.getElementById("pdf_zoom_fit");
+        const zoom_level_display = document.getElementById("pdf_zoom_level");
+        const toc_toggle_btn = document.getElementById("pdf_toc_toggle");
+        const toc_panel = document.getElementById("pdf_toc");
+        const toc_inner = document.getElementById("pdf_toc_inner");
+        const page_display = document.getElementById("pdf_page_display");
 
-        if (!lightbox || !frame || !close_btn) return;
+        if (!lightbox || !close_btn || !canvas_container) return;
 
-        const PDFJS_VIEWER = "https://unpkg.com/pdfjs-dist@4.9.155/web/viewer.html";
+        // PDF.js via CDN — same path for local dev and production
+        const PDFJS_URL = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
+        const WORKER_URL = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
 
-        function open_pdf(relative_path) {
+        let pdfjsLib = null;
+        let current_pdf = null;
+        let current_scale = 1.0;
+        let fit_scale = 1.0;
+        let toc_open = false;
+
+        async function ensure_pdfjs() {
+            if (pdfjsLib) return true;
+            try {
+                pdfjsLib = await import(PDFJS_URL);
+                pdfjsLib.GlobalWorkerOptions.workerSrc = WORKER_URL;
+                return true;
+            } catch (err) {
+                console.error("Failed to load PDF.js:", err);
+                return false;
+            }
+        }
+
+        function update_zoom_display() {
+            zoom_level_display.textContent = `${Math.round(current_scale * 100)}%`;
+        }
+
+        function update_page_display(current, total) {
+            if (page_display) {
+                page_display.textContent = total ? `${current} / ${total}` : `\u2014\u00a0/\u00a0\u2014`;
+            }
+        }
+
+        function update_current_page_from_scroll() {
+            if (!current_pdf) return;
+            const canvases = canvas_container.querySelectorAll("canvas");
+            if (!canvases.length) return;
+            const container_top = canvas_container.getBoundingClientRect().top;
+            let best = 0;
+            let best_dist = Infinity;
+            canvases.forEach((canvas, idx) => {
+                const rect = canvas.getBoundingClientRect();
+                const dist = Math.abs(rect.top - container_top);
+                if (dist < best_dist) {
+                    best_dist = dist;
+                    best = idx;
+                }
+            });
+            update_page_display(best + 1, current_pdf.numPages);
+        }
+
+        function scroll_to_page(page_num) {
+            const canvases = canvas_container.querySelectorAll("canvas");
+            const target = canvases[page_num - 1];
+            if (!target) return;
+            const container_rect = canvas_container.getBoundingClientRect();
+            const target_rect = target.getBoundingClientRect();
+            const offset = target_rect.top - container_rect.top + canvas_container.scrollTop - 16;
+            canvas_container.scrollTo({top: offset, behavior: "smooth"});
+            update_page_display(page_num, current_pdf ? current_pdf.numPages : 0);
+        }
+
+        async function build_toc() {
+            toc_inner.innerHTML = "";
+
+            let outline = null;
+            try {
+                outline = await current_pdf.getOutline();
+            } catch (_) {
+                outline = null;
+            }
+
+            if (outline && outline.length > 0) {
+                const TOC_MAX_DEPTH = 1; // 0 = H1 only, 1 = H1+H2, 2 = H1+H2+H3, etc.
+                function render_outline_items(items, depth) {
+                    if (depth > TOC_MAX_DEPTH) return;
+                    for (const item of items) {
+                        const a = document.createElement("a");
+                        a.href = "#";
+                        a.textContent = item.title || "Untitled";
+                        a.style.paddingLeft = `${1 + depth * 1.2}rem`;
+                        a.addEventListener("click", async (e) => {
+                            e.preventDefault();
+                            if (!item.dest) return;
+                            try {
+                                let dest = item.dest;
+                                if (typeof dest === "string") {
+                                    dest = await current_pdf.getDestination(dest);
+                                }
+                                if (!dest) return;
+                                const page_index = await current_pdf.getPageIndex(dest[0]);
+                                scroll_to_page(page_index + 1);
+                            } catch (_) {
+                            }
+                        });
+                        toc_inner.appendChild(a);
+                        if (item.items && item.items.length > 0) {
+                            render_outline_items(item.items, depth + 1);
+                        }
+                    }
+                }
+
+                render_outline_items(outline, 0);
+            } else {
+                for (let i = 1; i <= current_pdf.numPages; i++) {
+                    const a = document.createElement("a");
+                    a.href = "#";
+                    a.className = "toc_page";
+                    a.textContent = `Page ${i}`;
+                    const page_num = i;
+                    a.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        scroll_to_page(page_num);
+                    });
+                    toc_inner.appendChild(a);
+                }
+            }
+        }
+
+        function set_toc_open(open) {
+            toc_open = open;
+            toc_panel.classList.toggle("open", open);
+            toc_toggle_btn.classList.toggle("active", open);
+            toc_toggle_btn.setAttribute("aria-expanded", String(open));
+        }
+
+        async function render_all_pages() {
+            if (!current_pdf) return;
+            canvas_container.innerHTML = "";
+            const container_width = canvas_container.clientWidth - 32;
+
+            for (let page_num = 1; page_num <= current_pdf.numPages; page_num++) {
+                const page = await current_pdf.getPage(page_num);
+                const base_viewport = page.getViewport({scale: 1.0});
+
+                if (page_num === 1) {
+                    fit_scale = container_width / base_viewport.width;
+                }
+
+                const viewport = page.getViewport({scale: current_scale});
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                await page.render({canvasContext: ctx, viewport}).promise;
+                canvas_container.appendChild(canvas);
+            }
+
+            update_zoom_display();
+            update_page_display(1, current_pdf.numPages);
+        }
+
+        canvas_container.addEventListener("scroll", update_current_page_from_scroll, {passive: true});
+
+        function set_scale(new_scale) {
+            current_scale = Math.max(0.25, Math.min(4.0, new_scale));
+            render_all_pages();
+        }
+
+        async function open_pdf(relative_path) {
             const scrollbar_width = window.innerWidth - document.documentElement.clientWidth;
             document.body.style.paddingRight = `${scrollbar_width}px`;
             document.body.style.overflow = "hidden";
-            const full_url = `${SITE_BASE_URL}/${relative_path}`;
-            const is_local = window.location.hostname === "localhost"
-                || window.location.hostname === "127.0.0.1";
-            const viewer_url = is_local
-                ? full_url
-                : `${PDFJS_VIEWER}?file=${encodeURIComponent(full_url)}`;
-
-            frame.src = viewer_url;
             lightbox.classList.add("open");
-            document.body.style.overflow = "hidden";
+            canvas_container.innerHTML = "";
+            toc_inner.innerHTML = "";
+            set_toc_open(false);
             if (loading_msg) loading_msg.style.display = "flex";
-            frame.onload = () => {
+
+            const loaded = await ensure_pdfjs();
+            if (!loaded) {
                 if (loading_msg) loading_msg.style.display = "none";
-            };
+                return;
+            }
+
+            try {
+                const full_url = `${SITE_BASE_URL}/${relative_path}`;
+                current_pdf = await pdfjsLib.getDocument(full_url).promise;
+
+                const first_page = await current_pdf.getPage(1);
+                const base_viewport = first_page.getViewport({scale: 1.0});
+                const container_width = canvas_container.clientWidth - 32;
+                current_scale = container_width / base_viewport.width;
+                fit_scale = current_scale;
+
+                await render_all_pages();
+                await build_toc();
+            } catch (err) {
+                console.error("PDF load error:", err);
+                canvas_container.innerHTML = `<p style="color:#888;font-family:var(--font-tech);font-size:0.75rem;padding:2rem;">Failed to load document.</p>`;
+            } finally {
+                if (loading_msg) loading_msg.style.display = "none";
+            }
         }
 
         function close_pdf() {
             document.body.style.overflow = "";
             document.body.style.paddingRight = "";
             lightbox.classList.remove("open");
-            frame.src = "";
-            document.body.style.overflow = "";
-            if (loading_msg) loading_msg.style.display = "none";
+            canvas_container.innerHTML = "";
+            toc_inner.innerHTML = "";
+            set_toc_open(false);
+            current_pdf = null;
+            update_page_display(0, 0);
         }
+
+        toc_toggle_btn.addEventListener("click", () => set_toc_open(!toc_open));
 
         close_btn.addEventListener("click", close_pdf);
 
@@ -2757,6 +3199,10 @@
         document.addEventListener("keydown", (e) => {
             if (e.key === "Escape") close_pdf();
         });
+
+        zoom_in_btn.addEventListener("click", () => set_scale(current_scale * 1.2));
+        zoom_out_btn.addEventListener("click", () => set_scale(current_scale / 1.2));
+        zoom_fit_btn.addEventListener("click", () => set_scale(fit_scale));
 
         document.querySelectorAll("[data-pdf]").forEach(trigger => {
             trigger.addEventListener("click", (e) => {
@@ -2827,7 +3273,7 @@
 
     initialize_img_lightbox();
 
-    initialize_pdf_lightbox();
+    await initialize_pdf_lightbox();
 
     window.addEventListener("hashchange", set_active_page);
 
